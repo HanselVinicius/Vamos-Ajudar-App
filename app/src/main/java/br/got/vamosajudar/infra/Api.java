@@ -10,8 +10,8 @@ import retrofit2.http.POST;
 public interface Api {
 
 
-    @GET
-    Call<ResponseBody> getOngs(@Body Ong ong);
+    @GET("/v1/ong")
+    Call<ResponseBody> getOngs();
 
     @POST
     Call<ResponseBody> registerOngs(@Body Ong ong);

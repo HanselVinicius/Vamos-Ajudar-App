@@ -6,4 +6,16 @@
     </style>
 
     <style name="Theme.VamosAjudar" parent="Base.Theme.VamosAjudar" />
+
+
+
+
+    <style name="SplashScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <item name="android:windowBackground">@drawable/background_splashscreen</item>
+        <item name="android:statusBarColor" tools:targetApi="R">?attr/colorPrimary</item>
+
+    </style>
+
+
 </resources>
