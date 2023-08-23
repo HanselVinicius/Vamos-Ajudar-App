@@ -2,18 +2,14 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.VamosAjudar" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:statusBarColor">@color/status_bar_color</item>
+
     </style>
 
     <style name="Theme.VamosAjudar" parent="Base.Theme.VamosAjudar" />
 
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
-
-
-    <style name="SplashScreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-
-        <item name="android:windowBackground">@drawable/background_splashscreen</item>
-        <item name="android:statusBarColor" tools:targetApi="R">?attr/colorPrimary</item>
 
     </style>
 
