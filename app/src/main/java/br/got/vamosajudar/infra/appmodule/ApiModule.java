@@ -3,8 +3,6 @@ package br.got.vamosajudar.infra.appmodule;
 import javax.inject.Singleton;
 
 import br.got.vamosajudar.infra.Api;
-import br.got.vamosajudar.infra.Repository;
-import br.got.vamosajudar.model.ong.OngRepository;
 import dagger.Module;
 import dagger.Provides;
 import dagger.hilt.InstallIn;
