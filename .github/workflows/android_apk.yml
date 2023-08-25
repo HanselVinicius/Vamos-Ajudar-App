@@ -1,0 +1,44 @@
+name: Gerar APK
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Gerar APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Configurar JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '17'
+
+      - name: Configurar ambiente do Android
+        run: echo "sdk.dir=${RUNNER_WORKSPACE}/android-sdk" >> $GITHUB_ENV
+
+      - name: Baixar e instalar o Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Construir APK de Release
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assemble
+
+      - name: Construir APK de Debug
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleDebug
+
+      - name: Fazer upload do APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: vamos-ajudar-apk
+          path: ./app/build/outputs/apk
