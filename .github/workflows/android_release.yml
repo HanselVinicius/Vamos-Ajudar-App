@@ -25,10 +25,7 @@ jobs:
         run: echo "sdk.dir=${RUNNER_WORKSPACE}/android-sdk" >> $GITHUB_ENV
 
       - name: Baixar e instalar o Android SDK
-        run: |
-          wget -q https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip -O android-sdk.zip
-          unzip -q android-sdk.zip -d android-sdk
-          yes | android-sdk/cmdline-tools/bin/sdkmanager "platforms;android-30"
+        uses: android-actions/setup-android@v2
 
       - name: Construir APK de Teste
         run: |
