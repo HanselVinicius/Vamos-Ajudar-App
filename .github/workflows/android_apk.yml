@@ -1,4 +1,4 @@
-name: Gerar APK de Debug
+name: Gerar APK
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Gerar APK de Debug
+    name: Gerar APK
     runs-on: ubuntu-latest
 
     steps:
@@ -27,13 +27,20 @@ jobs:
       - name: Baixar e instalar o Android SDK
         uses: android-actions/setup-android@v2
 
-      - name: Construir APK de Teste
+      - name: Construir APK de Release
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assemble
+
+      - name: Construir APK de Debug
         run: |
           chmod +x ./gradlew
           ./gradlew assembleDebug
-          
+
       - name: Fazer upload do APK
         uses: actions/upload-artifact@v3
         with:
-          name: vamos-ajudar-debug
-          path: ./app/build/outputs/apk/debug/app-debug.apk
+          name: vamos-ajudar-apk
+          path: |
+            ./app/build/outputs/apk/release/app-release.apk
+            ./app/build/outputs/apk/debug/app-debug.apk
