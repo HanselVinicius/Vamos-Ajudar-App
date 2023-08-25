@@ -33,7 +33,7 @@ jobs:
           ./gradlew assembleDebug
 
       - name: Mover APK para pasta de artefatos
-        run: mv ${{ runner.workspace }}/app/build/outputs/apk/debug/app-debug.apk ${{ runner.workspace }}/artifacts/vamos-ajudar-debug.apk
+        run: mv ./app/build/outputs/apk/debug/app-debug.apk ${{ runner.workspace }}/artifacts/vamos-ajudar-debug.apk
 
       - name: Fazer upload do APK
         uses: actions/upload-artifact@v2
