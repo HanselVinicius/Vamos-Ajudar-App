@@ -10,4 +10,18 @@ public class Ong {
     private Boolean verified;
     private Boolean active;
 
+
+    @Override
+    public String toString() {
+        return "Ong{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", goal='" + goal + '\'' +
+                ", address=" + address +
+                ", contact=" + contact +
+                ", verified=" + verified +
+                ", active=" + active +
+                '}';
+    }
 }

@@ -1,5 +1,7 @@
 package br.got.vamosajudar.infra;
 
+import java.util.List;
+
 import br.got.vamosajudar.model.ong.Ong;
 import br.got.vamosajudar.model.user.dto.LoginDTO;
 import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
@@ -13,7 +15,7 @@ public interface Api {
 
 
     @GET("/v1/ong")
-    Call<ResponseBody> getOngs();
+    Call<List<Ong>> getOngs();
 
     @POST
     Call<ResponseBody> registerOngs(@Body Ong ong);

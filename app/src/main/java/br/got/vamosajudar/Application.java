@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import br.got.vamosajudar.infra.observer.Publisher;
-import br.got.vamosajudar.model.user.TokenManager;
+import br.got.vamosajudar.model.user.token.TokenManager;
 import br.got.vamosajudar.model.user.UserPublisher;
 import dagger.hilt.android.HiltAndroidApp;
 
