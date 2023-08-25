@@ -1,0 +1,49 @@
+name: Gerar APK de Teste
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Gerar APK de Teste
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v2
+
+      - name: Configurar JDK 8
+        uses: actions/setup-java@v2
+        with:
+          java-version: 8
+
+      - name: Configurar ambiente do Android
+        uses: actions/setup-java@v2
+        with:
+          java-version: 11
+        env:
+          ANDROID_HOME: ${{ runner.workspace }}/android-sdk
+
+      - name: Baixar e instalar o Android SDK
+        run: |
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip -O android-sdk.zip
+          unzip -q android-sdk.zip -d android-sdk
+          echo y | android-sdk/cmdline-tools/bin/sdkmanager "platforms;android-30"
+
+      - name: Construir APK de Teste
+        run: |
+          cd app
+          chmod +x ./gradlew
+          ./gradlew assembleDebug
+
+      - name: Mover APK para pasta de artefatos
+        run: mv app/build/outputs/apk/debug/app-debug.apk ${{ runner.workspace }}/artifacts/vamos-ajudar-debug.apk
+
+      - name: Fazer upload do APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: vamos-ajudar-debug
+          path: ${{ runner.workspace }}/artifacts/vamos-ajudar-debug.apk
