@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
+          distribution: 'corretto'
 
       - name: Configurar ambiente do Android
         run: echo "sdk.dir=${RUNNER_WORKSPACE}/android-sdk" >> $GITHUB_ENV
