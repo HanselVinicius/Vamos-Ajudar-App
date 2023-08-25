@@ -1,4 +1,4 @@
-name: Gerar APK de Teste
+name: Gerar APK de Release
 
 on:
   push:
@@ -8,12 +8,12 @@ on:
 
 jobs:
   build:
-    name: Gerar APK de Teste
+    name: Gerar APK de Release
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout do código
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Configurar JDK
         uses: actions/setup-java@v3
@@ -30,10 +30,10 @@ jobs:
       - name: Construir APK de Teste
         run: |
           chmod +x ./gradlew
-          ./gradlew assembleDebug
+          ./gradlew assemble
 
       - name: Fazer upload do APK
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: vamos-ajudar-debug
-          path: ./app/build/outputs/apk/debug/app-debug.apk
+          path: ./app/build/outputs/apk/release/app-release.apk
