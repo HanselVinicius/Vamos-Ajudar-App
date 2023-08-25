@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch: # Isso permite acionar manualmente o fluxo
+  workflow_dispatch:
 
 jobs:
   build:
@@ -32,11 +32,8 @@ jobs:
           chmod +x ./gradlew
           ./gradlew assembleDebug
 
-      - name: Mover APK para pasta de artefatos
-        run: mv ./app/build/outputs/apk/debug/app-debug.apk ${{ runner.workspace }}/artifacts/vamos-ajudar-debug.apk
-
       - name: Fazer upload do APK
         uses: actions/upload-artifact@v2
         with:
           name: vamos-ajudar-debug
-          path: ${{ runner.workspace }}/artifacts/vamos-ajudar-debug.apk
+          path: ./app/build/outputs/apk/debug/app-debug.apk
