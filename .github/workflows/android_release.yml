@@ -29,7 +29,6 @@ jobs:
 
       - name: Construir APK de Teste
         run: |
-          cd app
           chmod +x ./gradlew
           ./gradlew assembleDebug
 
