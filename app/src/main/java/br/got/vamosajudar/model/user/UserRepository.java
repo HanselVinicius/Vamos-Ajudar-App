@@ -1,7 +1,5 @@
 package br.got.vamosajudar.model.user;
 
-import android.util.Log;
-
 import javax.inject.Inject;
 
 import br.got.vamosajudar.infra.Api;
@@ -9,6 +7,8 @@ import br.got.vamosajudar.infra.Repository;
 import br.got.vamosajudar.infra.exceptions.LoginException;
 import br.got.vamosajudar.model.user.dto.LoginDTO;
 import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
+import br.got.vamosajudar.model.user.token.TokenCallback;
+import br.got.vamosajudar.model.user.token.TokenManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,15 +23,16 @@ public class UserRepository implements Repository {
         this.api = api;
     }
 
-    public void login(LoginDTO dto) throws LoginException{
+    public void login(LoginDTO dto, TokenCallback callback) throws LoginException{
         Call<LoginResponseDTO> call = api.login(dto);
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<LoginResponseDTO> call, Response<LoginResponseDTO> response) {
-                if (response.isSuccessful()) {
+                 if (response.isSuccessful() && response.code() != 403) {
                     LoginResponseDTO res = response.body();
                     String token = res.getToken();
                     TokenManager.saveToken(token);
+                    callback.onTokenSaved();
                 }
             }
 

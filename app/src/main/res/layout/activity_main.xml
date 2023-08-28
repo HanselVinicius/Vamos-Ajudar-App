@@ -68,15 +68,7 @@
                 android:backgroundTint="@color/secundary_button_green"
                 android:textColor="@color/white" />
 
-            <Button
-                android:id="@+id/buttonSemLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/txt_sem_registro"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/secundary_button_green"
-                android:textColor="@color/white" />
+
 
 <!--            <TextView-->
 <!--                android:id="@+id/textViewForgotPassword"-->

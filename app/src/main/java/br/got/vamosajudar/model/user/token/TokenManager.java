@@ -1,4 +1,4 @@
-package br.got.vamosajudar.model.user;
+package br.got.vamosajudar.model.user.token;
 
 import android.content.SharedPreferences;
 

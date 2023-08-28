@@ -1,4 +1,4 @@
-package br.got.vamosajudar.view;
+package br.got.vamosajudar.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ public class SplashActivity  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         new Handler().postDelayed(() -> {
-            Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+            Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(mainIntent);
 
             finish();
