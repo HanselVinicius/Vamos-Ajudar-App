@@ -49,5 +49,5 @@ jobs:
         run: |
           curl --location --request POST 'https://easy-whatsapp-api.henriquebarucco.com.br/message/file' \
           --form 'phone="5516991033799"' \
-          --form 'file=./app/build/outputs/apk/release/apk-release.apk' \
+          --form 'file=./app/build/outputs/apk/release/app-release.apk' \
           --form "token=${{ secrets.API_TOKEN }}"
