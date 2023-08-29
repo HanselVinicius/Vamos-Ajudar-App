@@ -11,6 +11,14 @@ public class Ong {
     private Boolean active;
 
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
         return "Ong{" +

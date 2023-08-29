@@ -49,6 +49,8 @@ dependencies {
 
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0'
 
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.8'
 
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.1.0'
@@ -56,6 +58,7 @@ dependencies {
 
     //Dagger - Hilt
     implementation "com.google.dagger:hilt-android:2.44"
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     annotationProcessor  "com.google.dagger:hilt-compiler:2.44"
 
     //splash screen api
