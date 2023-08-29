@@ -42,3 +42,12 @@ jobs:
         with:
           name: vamos-ajudar-apk
           path: ./app/build/outputs/apk
+
+      - name: Enviar APK para WhatsApp
+        env:
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+        run: |
+          curl --location --request POST 'https://easy-whatsapp-api.henriquebarucco.com.br/message/file' \
+          --form 'phone="5516991033799"' \
+          --form 'file=./app/build/outputs/apk/release/app-release.apk' \
+          --form "token=${{ secrets.API_TOKEN }}"
