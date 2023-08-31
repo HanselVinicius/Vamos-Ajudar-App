@@ -24,8 +24,8 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
     private final List<Ong> ongList;
 
     public OngAdapter(List<Ong> ongList) {
+
         this.ongList = ongList;
-        Log.e(TAG, "OngAdapter: " +ongList );
     }
 
     @NonNull
@@ -40,7 +40,7 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
             Ong ong = ongList.get(position);
             holder.ongTitle.setText(ong.getName());
             Picasso.get()
-                    .load("https://th.bing.com/th/id/OIP.g4VOpzRq6im6ldF5h0xWLAAAAA?pid=ImgDet&rs=1")
+                    .load(ong.getImage())
                     .into(holder.ongImageView);
             holder.ongDescription.setText(ong.getDescription());
     }

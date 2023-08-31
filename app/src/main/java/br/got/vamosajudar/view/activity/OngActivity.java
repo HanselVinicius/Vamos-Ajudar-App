@@ -1,6 +1,8 @@
 package br.got.vamosajudar.view.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,7 @@ import java.util.List;
 
 import br.got.vamosajudar.databinding.ActivityOngBinding;
 import br.got.vamosajudar.model.ong.Ong;
+import br.got.vamosajudar.model.ong.OngResponse;
 import br.got.vamosajudar.view.components.OngAdapter;
 import br.got.vamosajudar.view_model.OngActivityViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
@@ -30,6 +33,10 @@ public class OngActivity extends AppCompatActivity {
 
     private List<Ong> ongList;
 
+    private OngResponse<Ong> ongResponse;
+
+    private int currentPage;
+
 
 
     @Override
@@ -43,9 +50,15 @@ public class OngActivity extends AppCompatActivity {
     }
 
     private void observeOngs(){
-        this.viewModel.getAllOngs();
-        viewModel.getListOfOngs().observe(this,ongs -> {
-            this.ongList = ongs;
+        this.viewModel.getAllOngs(currentPage);
+        MutableLiveData<OngResponse<Ong>> listOfOngs = viewModel.getListOfOngs();
+        listOfOngs.observe(this,ongs -> {
+            this.ongResponse = ongs;
+            if (ongList == null) {
+                this.ongList = ongs.getContent();
+            }else {
+                this.ongList.addAll(ongs.getContent());
+            }
             this.recyclerView.setAdapter(new OngAdapter(this.ongList));
         });
 
@@ -55,8 +68,24 @@ public class OngActivity extends AppCompatActivity {
 
     private void initializeScreen(){
         recyclerView = binding.recyclerView;
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
         this.recyclerView.setAdapter(new OngAdapter(this.ongList));
+        this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (!ongResponse.isLast() && !ongResponse.isEmpty() ){
+                    currentPage++;
+                    observeOngs();
+                }
+//
+            }
+        });
+
+
+        // swipe refresh
         this.swipeRefreshLayout = binding.swipeRefreshLayout;
         swipeRefreshLayout.setOnRefreshListener(()->{
             swipeAction();
@@ -65,6 +94,7 @@ public class OngActivity extends AppCompatActivity {
     }
 
     private void swipeAction(){
+        this.currentPage = 0;
         observeOngs();
     }
 

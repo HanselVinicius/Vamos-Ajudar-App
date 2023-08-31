@@ -10,6 +10,8 @@ public class Ong {
     private Boolean verified;
     private Boolean active;
 
+    private String image;
+
 
     public String getName() {
         return name;
@@ -17,6 +19,10 @@ public class Ong {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     @Override
@@ -30,6 +36,7 @@ public class Ong {
                 ", contact=" + contact +
                 ", verified=" + verified +
                 ", active=" + active +
+                ", image='" + image + '\'' +
                 '}';
     }
 }

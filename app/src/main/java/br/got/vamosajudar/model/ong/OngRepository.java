@@ -1,5 +1,7 @@
 package br.got.vamosajudar.model.ong;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
@@ -18,7 +20,8 @@ public class OngRepository implements Repository {
     private static final String TAG = "OngRepository";
     private final Api api;
 
-    private static final MutableLiveData<List<Ong>>  ongList = new MutableLiveData<>();
+
+    private static final MutableLiveData<OngResponse<Ong>>  ongList = new MutableLiveData<>();
 
 
     @Inject
@@ -26,27 +29,33 @@ public class OngRepository implements Repository {
         this.api = api;
     }
 
-    public void performGetAllOngs(){
-        Call<List<Ong>> call = this.api.getOngs();
+    public void performGetAllOngs(int page){
+        Call<OngResponse<Ong>> call = this.api.getOngs(page);
         call.enqueue(
                 new Callback<>() {
                     @Override
-                    public void onResponse(Call<List<Ong>> call, Response<List<Ong>> response) {
+                    public void onResponse(Call<OngResponse<Ong>> call, Response<OngResponse<Ong>> response) {
+
+
                         if (response.isSuccessful()){
+                            Log.e("TAG", "onResponse:  teste " +response.body() );
                             ongList.postValue(response.body());
+                        }else {
+                            Log.e(TAG, "onFailure: ERRO NA REQUISICAO DE ONG: " +response.raw() );
+
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<List<Ong>> call, Throwable t) {
-
+                    public void onFailure(Call<OngResponse<Ong>> call, Throwable t) {
+                        Log.e(TAG, "onFailure: ERRO NA REQUISICAO DE ONG: ",t );
                     }
                 }
         );
     }
 
 
-    public MutableLiveData<List<Ong>> getListOfOngs() {
+    public MutableLiveData<OngResponse<Ong>> getListOfOngs() {
         return ongList;
     }
 
