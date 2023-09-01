@@ -52,11 +52,7 @@ jobs:
         env:
           API_TOKEN: ${{ secrets.API_TOKEN }}
         run: |
-          curl -X 'POST' \
-          'https://easy-whatsapp-api.henriquebarucco.com.br/message/file' \
-          -H 'accept: */*' \
-          -H "Token: $API_TOKEN"
-          -H 'Content-Type: multipart/form-data' \
-          -F 'phone=5516991033799' \
-          -F 'file=./app/build/outputs/apk/release/app-release.apk' \
-          --http1.1
+          curl --location --request POST 'https://easy-whatsapp-api.henriquebarucco.com.br/message/file' \
+          --header 'Token: $API_TOKEN' \
+          --form 'phone="5516991033799"' \
+          --form 'file=./app/build/outputs/apk/release/app-release.apk'
