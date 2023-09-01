@@ -43,6 +43,11 @@ jobs:
           name: vamos-ajudar-apk
           path: ./app/build/outputs/apk
 
+      - name: Upgrade curl
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl
+
       - name: Enviar APK para WhatsApp
         env:
           API_TOKEN: ${{ secrets.API_TOKEN }}
