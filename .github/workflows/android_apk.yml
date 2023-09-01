@@ -49,10 +49,8 @@ jobs:
           sudo apt-get install -y curl
 
       - name: Enviar APK para WhatsApp
-        env:
-          API_TOKEN: ${{ secrets.API_TOKEN }}
         run: |
           curl --location --request POST 'https://easy-whatsapp-api.henriquebarucco.com.br/message/file' \
-          --header 'Token: $API_TOKEN' \
+          --header 'Token: ${{ secrets.API_TOKEN }}' \
           --form 'phone="5516991033799"' \
           --form 'file=./app/build/outputs/apk/release/app-release.apk'
