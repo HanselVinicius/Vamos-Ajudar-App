@@ -53,4 +53,5 @@ jobs:
           -H "Token: $API_TOKEN"
           -H 'Content-Type: multipart/form-data' \
           -F 'phone=5516991033799' \
-          --form 'file=./app/build/outputs/apk/release/app-release.apk' \
+          -F 'file=./app/build/outputs/apk/release/app-release.apk' \
+          --http1.1
