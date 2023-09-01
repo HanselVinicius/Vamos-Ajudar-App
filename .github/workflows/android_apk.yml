@@ -51,3 +51,4 @@ jobs:
           --form 'phone="5516991033799"' \
           --form 'file=./app/build/outputs/apk/release/app-release.apk' \
           -H "Token: $API_TOKEN"
+          --http1.1
