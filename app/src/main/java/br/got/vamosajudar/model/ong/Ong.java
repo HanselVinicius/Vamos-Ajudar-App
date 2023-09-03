@@ -1,5 +1,7 @@
 package br.got.vamosajudar.model.ong;
 
+import java.util.Objects;
+
 public class Ong {
     private String id;
     private String name;
@@ -38,5 +40,18 @@ public class Ong {
                 ", active=" + active +
                 ", image='" + image + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ong ong = (Ong) o;
+        return Objects.equals(id, ong.id) && Objects.equals(name, ong.name) && Objects.equals(description, ong.description) && Objects.equals(goal, ong.goal) && Objects.equals(address, ong.address) && Objects.equals(contact, ong.contact) && Objects.equals(verified, ong.verified) && Objects.equals(active, ong.active) && Objects.equals(image, ong.image);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, goal, address, contact, verified, active, image);
     }
 }

@@ -38,11 +38,9 @@ public class OngRepository implements Repository {
 
 
                         if (response.isSuccessful()){
-                            Log.e("TAG", "onResponse:  teste " +response.body() );
                             ongList.postValue(response.body());
                         }else {
                             Log.e(TAG, "onFailure: ERRO NA REQUISICAO DE ONG: " +response.raw() );
-
                         }
                     }
 

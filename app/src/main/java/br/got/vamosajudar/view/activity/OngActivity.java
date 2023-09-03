@@ -11,7 +11,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.got.vamosajudar.databinding.ActivityOngBinding;
 import br.got.vamosajudar.model.ong.Ong;
@@ -45,7 +47,9 @@ public class OngActivity extends AppCompatActivity {
         binding = ActivityOngBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         this.viewModel = new ViewModelProvider(this).get(OngActivityViewModel.class);
+        this.ongList = new ArrayList<>();
         observeOngs();
+
         initializeScreen();
     }
 
@@ -54,11 +58,7 @@ public class OngActivity extends AppCompatActivity {
         MutableLiveData<OngResponse<Ong>> listOfOngs = viewModel.getListOfOngs();
         listOfOngs.observe(this,ongs -> {
             this.ongResponse = ongs;
-            if (ongList == null) {
-                this.ongList = ongs.getContent();
-            }else {
-                this.ongList.addAll(ongs.getContent());
-            }
+            this.ongList.addAll(ongs.getContent().stream().distinct().collect(Collectors.toList()));
             this.recyclerView.setAdapter(new OngAdapter(this.ongList));
         });
 
@@ -73,12 +73,16 @@ public class OngActivity extends AppCompatActivity {
 
         this.recyclerView.setAdapter(new OngAdapter(this.ongList));
         this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (!ongResponse.isLast() && !ongResponse.isEmpty() ){
-                    currentPage++;
-                    observeOngs();
+
+                if (dy > 0) {
+                    if (!ongResponse.isLast() && !ongResponse.isEmpty()) {
+                        currentPage++;
+                        viewModel.getAllOngs(currentPage);
+                    }
                 }
 //
             }
@@ -94,8 +98,7 @@ public class OngActivity extends AppCompatActivity {
     }
 
     private void swipeAction(){
-        this.currentPage = 0;
-        observeOngs();
+        this.viewModel.getAllOngs(currentPage);
     }
 
 
