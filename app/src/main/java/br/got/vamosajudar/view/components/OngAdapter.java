@@ -43,6 +43,13 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
                     .load(ong.getImage())
                     .into(holder.ongImageView);
             holder.ongDescription.setText(ong.getDescription());
+
+            if (ong.getVerified()){
+                holder.ongTitle.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.verified_star,0);
+            }else {
+                holder.ongTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+
+            }
     }
 
     @Override

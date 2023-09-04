@@ -15,6 +15,10 @@ public class Ong {
     private String image;
 
 
+    public String getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -25,6 +29,10 @@ public class Ong {
 
     public String getImage() {
         return image;
+    }
+
+    public Boolean getVerified() {
+        return verified;
     }
 
     @Override

@@ -8,32 +8,31 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="361dp"
-        android:layout_height="291dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="8dp"
         android:elevation="4dp"
         app:cardCornerRadius="16dp"
-        android:layout_marginBottom="4dp"
-        >
+        android:layout_marginBottom="4dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="294dp"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:padding="16dp">
 
             <ImageView
                 android:id="@+id/ongImageView"
                 android:layout_width="match_parent"
-                android:layout_height="204dp"
+                android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:scaleType="center"
+                android:scaleType="centerCrop"
                 android:src="@drawable/logo_wtht_bg" />
 
             <TextView
                 android:id="@+id/ongTitleTextView"
-                android:layout_width="332dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/ongImageView"
                 android:layout_marginTop="8dp"
                 android:drawablePadding="8dp"
                 android:text="Title Text"
@@ -45,8 +44,9 @@
                 android:id="@+id/ongDescriptionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/ongTitleTextView"
                 android:layout_marginTop="8dp"
                 android:text="Description Text" />
-        </LinearLayout>
+        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
