@@ -9,6 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:contentDescription="@string/logo_vamos_ajudar_txt"
-        android:src="@drawable/logo_wtht_bg" />
+        android:src="@drawable/logo_branco" />
 
 </RelativeLayout>

@@ -4,6 +4,7 @@ import br.got.vamosajudar.model.ong.OngResponse;
 import br.got.vamosajudar.model.ong.Ong;
 import br.got.vamosajudar.model.user.dto.LoginDTO;
 import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
+import br.got.vamosajudar.model.user.dto.UserRegisterDTO;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -23,6 +24,10 @@ public interface Api {
 
     @POST("v1/auth/login")
     Call<LoginResponseDTO> login(@Body LoginDTO loginDTO);
+
+
+    @POST("v1/auth/register")
+    Call<UserRegisterDTO> registerUser(@Body UserRegisterDTO userRegisterDTO);
 
 
 }

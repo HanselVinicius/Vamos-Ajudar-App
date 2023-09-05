@@ -33,7 +33,7 @@ public class LoginActivityViewModel extends ViewModel implements TokenCallback {
 
     public void executeLogin(String username, String password, Subscriber sub){
         try {
-            if (username.isBlank() && password.isBlank()) {
+            if (username.isBlank() || password.isBlank()) {
                 throw new DadosInvalidosException("DADOS INVALIDOS OU NÃO INSERIDOS");
             }
             userPublisher.subscribe(sub);
@@ -45,6 +45,21 @@ public class LoginActivityViewModel extends ViewModel implements TokenCallback {
     }
 
 
+    public void executeRegister(String login,String email,String password,String name){
+        try{
+            //todo strategy verificar se tem internet se os dados estão corretos etc ??
+            if (login.isBlank() || email.isBlank() || password.isBlank() || name.isBlank()){
+                throw new DadosInvalidosException("DADOS INVALIDOS OU NÃO INSERIDOS");
+            }
+//            this.repository.register();
+        }catch (Exception ex){
+
+        }
+    }
+
+
+    //todo melhor verificação de login com esse callback de token ,
+    // aplicar o mesmo padrão para a tela de ongs para avisar internet desconectada etc
     @Override
     public void onTokenSaved() {
         userPublisher.notifySubscribers();

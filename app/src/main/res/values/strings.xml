@@ -7,4 +7,5 @@
     <string name="txt_register">Registrar</string>
     <string name="txt_sem_registro">Entrar Sem Registro</string>
     <string name="txt_esqueceu_senha">Esqueceu sua senha?</string>
+    <string name="cancelar">CANCELAR</string>
 </resources>

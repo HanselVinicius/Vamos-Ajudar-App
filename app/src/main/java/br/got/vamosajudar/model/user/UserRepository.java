@@ -7,6 +7,7 @@ import br.got.vamosajudar.infra.Repository;
 import br.got.vamosajudar.infra.exceptions.LoginException;
 import br.got.vamosajudar.model.user.dto.LoginDTO;
 import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
+import br.got.vamosajudar.model.user.dto.UserRegisterDTO;
 import br.got.vamosajudar.model.user.token.TokenCallback;
 import br.got.vamosajudar.model.user.token.TokenManager;
 import retrofit2.Call;
@@ -44,8 +45,19 @@ public class UserRepository implements Repository {
     }
 
     //todo register
-    public void register(){
+    public void register(UserRegisterDTO userRegisterDTO){
+        Call<UserRegisterDTO> call = api.registerUser(userRegisterDTO);
+        call.enqueue(new Callback<UserRegisterDTO>() {
+            @Override
+            public void onResponse(Call<UserRegisterDTO> call, Response<UserRegisterDTO> response) {
 
+            }
+
+            @Override
+            public void onFailure(Call<UserRegisterDTO> call, Throwable t) {
+
+            }
+        });
     }
 
 }
