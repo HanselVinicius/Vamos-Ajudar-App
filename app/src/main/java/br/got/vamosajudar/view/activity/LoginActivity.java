@@ -63,17 +63,17 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
          var dialog = new Dialog(this);
          dialog.setContentView(R.layout.dialog_register_user);
          dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-         Button btnCancel = findViewById(R.id.btn_cancel_user);
-         EditText txtName = findViewById(R.id.edit_text_name_user_register);
-         EditText txtEmail = findViewById(R.id.edt_txt_email_user);
-         EditText txtUsername = findViewById(R.id.edt_txt_username);
-         EditText txtPassword = findViewById(R.id.editTextPassword);
+         Button btnCancel = dialog.findViewById(R.id.btn_cancel_user);
+         Button btnRegister = dialog.findViewById(R.id.btn_register_user);
+         EditText txtName = dialog.findViewById(R.id.edit_text_name_user_register);
+         EditText txtEmail = dialog.findViewById(R.id.edt_txt_email_user);
+         EditText txtUsername = dialog.findViewById(R.id.edt_txt_username);
+         EditText txtPassword = dialog.findViewById(R.id.editTextPassword);
 
          btnCancel.setOnClickListener(l->{
              dialog.cancel();
          });
 
-         Button btnRegister = findViewById(R.id.btn_register_user);
          btnRegister.setOnClickListener(l->{
              this.viewModel.executeRegister(
                      txtUsername.getText().toString(),
