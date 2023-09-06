@@ -14,11 +14,12 @@ import br.got.vamosajudar.infra.observer.Publisher;
 import br.got.vamosajudar.infra.observer.Subscriber;
 import br.got.vamosajudar.model.user.UserRepository;
 import br.got.vamosajudar.model.user.dto.LoginDTO;
-import br.got.vamosajudar.model.user.token.TokenCallback;
+import br.got.vamosajudar.model.user.dto.UserRegisterDTO;
+import br.got.vamosajudar.model.user.token.UserCallback;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
-public class LoginActivityViewModel extends ViewModel implements TokenCallback {
+public class LoginActivityViewModel extends ViewModel implements UserCallback {
 
     public static final String TAG = "MainActivityViewModel";
 
@@ -40,20 +41,25 @@ public class LoginActivityViewModel extends ViewModel implements TokenCallback {
             this.repository.login(new LoginDTO(username, password),this);
 
         }catch (LoginException  ex){
+            this.onTokenError(ex);
             Log.e(TAG, "executeLogin: ERRO NO LOGIN" ,ex );
+        }catch (Exception ex){
+            this.onTokenError(ex);
         }
     }
 
 
-    public void executeRegister(String login,String email,String password,String name){
+    public void executeRegister(String login,String email,String password,String name,Subscriber sub){
         try{
             //todo strategy verificar se tem internet se os dados estão corretos etc ??
             if (login.isBlank() || email.isBlank() || password.isBlank() || name.isBlank()){
                 throw new DadosInvalidosException("DADOS INVALIDOS OU NÃO INSERIDOS");
             }
+            userPublisher.subscribe(sub);
+            this.repository.register(new UserRegisterDTO(login,email,password,name),this);
 //            this.repository.register();
         }catch (Exception ex){
-
+            Log.e(TAG, "executeLogin: ERRO NO REGISTRO " ,ex );
         }
     }
 
@@ -64,4 +70,16 @@ public class LoginActivityViewModel extends ViewModel implements TokenCallback {
     public void onTokenSaved() {
         userPublisher.notifySubscribers();
     }
+
+    @Override
+    public void onTokenError(Exception ex) {
+        // verificacao de tipos de exceptions para melhor tratamento
+    }
+
+    @Override
+    public void onRegisterSuccess() {
+        userPublisher.notifySubscribers();
+    }
+
+
 }

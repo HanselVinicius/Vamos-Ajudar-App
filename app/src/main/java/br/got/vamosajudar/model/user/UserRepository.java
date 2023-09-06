@@ -8,7 +8,7 @@ import br.got.vamosajudar.infra.exceptions.LoginException;
 import br.got.vamosajudar.model.user.dto.LoginDTO;
 import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
 import br.got.vamosajudar.model.user.dto.UserRegisterDTO;
-import br.got.vamosajudar.model.user.token.TokenCallback;
+import br.got.vamosajudar.model.user.token.UserCallback;
 import br.got.vamosajudar.model.user.token.TokenManager;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +24,7 @@ public class UserRepository implements Repository {
         this.api = api;
     }
 
-    public void login(LoginDTO dto, TokenCallback callback) throws LoginException{
+    public void login(LoginDTO dto, UserCallback callback) throws LoginException{
         Call<LoginResponseDTO> call = api.login(dto);
         call.enqueue(new Callback<>() {
             @Override
@@ -39,18 +39,20 @@ public class UserRepository implements Repository {
 
             @Override
             public void onFailure(Call<LoginResponseDTO> call, Throwable t) {
-                throw new LoginException("ERRO NA REQUISICAO DE LOGIN");
+                throw new LoginException("ERRO NA REQUISICAO DE LOGIN",t);
             }
         });
     }
 
     //todo register
-    public void register(UserRegisterDTO userRegisterDTO){
+    public void register(UserRegisterDTO userRegisterDTO,UserCallback userCallback){
         Call<UserRegisterDTO> call = api.registerUser(userRegisterDTO);
-        call.enqueue(new Callback<UserRegisterDTO>() {
+        call.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<UserRegisterDTO> call, Response<UserRegisterDTO> response) {
-
+                if (response.isSuccessful()){
+                    userCallback.onRegisterSuccess();
+                }
             }
 
             @Override

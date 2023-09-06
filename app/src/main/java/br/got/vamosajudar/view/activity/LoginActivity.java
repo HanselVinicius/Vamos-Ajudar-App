@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -31,6 +32,8 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
     private EditText edt_password;
     private ActivityLoginBinding binding;
     private static final String TOKEN = "TOKEN";
+
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,6 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
     }
 
     private void register() {
-         var dialog = new Dialog(this);
          dialog.setContentView(R.layout.dialog_register_user);
          dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
          Button btnCancel = dialog.findViewById(R.id.btn_cancel_user);
@@ -79,7 +81,8 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
                      txtUsername.getText().toString(),
                      txtEmail.getText().toString(),
                      txtPassword.getText().toString(),
-                     txtName.getText().toString());
+                     txtName.getText().toString(),
+                     this);
          });
 
          dialog.show();
@@ -96,12 +99,15 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
     @Override
     public void update(){
         String token = TokenManager.getToken();
-
         if ( token != null){
             var it = new Intent(LoginActivity.this,OngActivity.class);
             it.putExtra(TOKEN,TokenManager.getToken());
             startActivity(it);
             finish();
+        }
+        if (dialog != null){
+            dialog.cancel();
+            Snackbar.make(binding.loginScreen,"REGISTRO EFETUADO COM SUCESSO",Snackbar.LENGTH_LONG).show();
         }
     }
 }
