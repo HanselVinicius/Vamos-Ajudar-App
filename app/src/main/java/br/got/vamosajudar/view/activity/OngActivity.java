@@ -1,6 +1,11 @@
 package br.got.vamosajudar.view.activity;
 
+import static br.got.vamosajudar.view.activity.LoginActivity.TOKEN;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -83,6 +88,18 @@ public class OngActivity extends AppCompatActivity {
     }
 
 
+    ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                int resultCode = result.getResultCode();
+                Intent data = result.getData();
+
+                if (resultCode == RESULT_OK && data != null) {
+                    String token = data.getStringExtra(TOKEN);
+                    Log.e("FINISH_INTENT_PARSING", "onActivityResult: token " + token);
+                }
+            }
+    );
 
     private void initializeScreen(){
 
@@ -92,7 +109,8 @@ public class OngActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent mainIntent = new Intent(OngActivity.this, LoginActivity.class);
-                        startActivity(mainIntent);
+                        launcher.launch(mainIntent);
+//                        startActivityForResult(mainIntent,100);
                     }
                 }
         );
@@ -136,6 +154,12 @@ public class OngActivity extends AppCompatActivity {
             }
         };
     }
+
+
+
+
+
+
 
 
     private void swipeAction(){

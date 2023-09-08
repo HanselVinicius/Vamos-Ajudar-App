@@ -21,7 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 @HiltViewModel
 public class LoginActivityViewModel extends ViewModel implements UserCallback {
 
-    public static final String TAG = "MainActivityViewModel";
+    public static final String TAG = "LoginActivityViewModel";
 
     private final Publisher userPublisher = Application.getUserPublisher();
     private final UserRepository repository;
@@ -43,24 +43,17 @@ public class LoginActivityViewModel extends ViewModel implements UserCallback {
         }catch (LoginException  ex){
             this.onTokenError(ex);
             Log.e(TAG, "executeLogin: ERRO NO LOGIN" ,ex );
-        }catch (Exception ex){
-            this.onTokenError(ex);
         }
     }
 
 
     public void executeRegister(String login,String email,String password,String name,Subscriber sub){
-        try{
             //todo strategy verificar se tem internet se os dados estão corretos etc ??
             if (login.isBlank() || email.isBlank() || password.isBlank() || name.isBlank()){
                 throw new DadosInvalidosException("DADOS INVALIDOS OU NÃO INSERIDOS");
             }
             userPublisher.subscribe(sub);
             this.repository.register(new UserRegisterDTO(login,email,password,name),this);
-//            this.repository.register();
-        }catch (Exception ex){
-            Log.e(TAG, "executeLogin: ERRO NO REGISTRO " ,ex );
-        }
     }
 
 
@@ -73,6 +66,7 @@ public class LoginActivityViewModel extends ViewModel implements UserCallback {
 
     @Override
     public void onTokenError(Exception ex) {
+        Log.e(TAG, "onTokenError: ERRO DO TOKEN",ex );
         // verificacao de tipos de exceptions para melhor tratamento
     }
 

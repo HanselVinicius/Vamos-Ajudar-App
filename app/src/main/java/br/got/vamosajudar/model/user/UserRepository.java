@@ -1,5 +1,7 @@
 package br.got.vamosajudar.model.user;
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 import br.got.vamosajudar.infra.Api;
@@ -10,6 +12,7 @@ import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
 import br.got.vamosajudar.model.user.dto.UserRegisterDTO;
 import br.got.vamosajudar.model.user.token.UserCallback;
 import br.got.vamosajudar.model.user.token.TokenManager;
+import br.got.vamosajudar.view_model.LoginActivityViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +37,9 @@ public class UserRepository implements Repository {
                     String token = res.getToken();
                     TokenManager.saveToken(token);
                     callback.onTokenSaved();
-                }
+                }else {
+
+                 }
             }
 
             @Override

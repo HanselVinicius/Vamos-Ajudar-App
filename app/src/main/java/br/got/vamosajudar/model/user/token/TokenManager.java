@@ -15,7 +15,6 @@ public class TokenManager {
     public static void saveToken(String token){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(TOKEN_KEY,token);
-        //todo algo para esperar o salvamento do shared, no momento temos que clicar duas vezes no login para avançar
         editor.apply();
     }
 

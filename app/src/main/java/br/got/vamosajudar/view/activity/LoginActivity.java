@@ -1,6 +1,5 @@
 package br.got.vamosajudar.view.activity;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -31,7 +29,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
     private EditText edt_username;
     private EditText edt_password;
     private ActivityLoginBinding binding;
-    private static final String TOKEN = "TOKEN";
+    public static final String TOKEN = "TOKEN";
 
     private Dialog dialog;
 
@@ -63,30 +61,37 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
     }
 
     private void register() {
-         dialog.setContentView(R.layout.dialog_register_user);
-         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-         Button btnCancel = dialog.findViewById(R.id.btn_cancel_user);
-         Button btnRegister = dialog.findViewById(R.id.btn_register_user);
-         EditText txtName = dialog.findViewById(R.id.edit_text_name_user_register);
-         EditText txtEmail = dialog.findViewById(R.id.edt_txt_email_user);
-         EditText txtUsername = dialog.findViewById(R.id.edt_txt_username);
-         EditText txtPassword = dialog.findViewById(R.id.editTextPassword);
+        try {
+            dialog = new Dialog(this);
+            dialog.setContentView(R.layout.dialog_register_user);
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            Button btnCancel = dialog.findViewById(R.id.btn_cancel_user);
+            Button btnRegister = dialog.findViewById(R.id.btn_register_user);
+            EditText txtName = dialog.findViewById(R.id.edit_text_name_user_register);
+            EditText txtEmail = dialog.findViewById(R.id.edt_txt_email_user);
+            EditText txtUsername = dialog.findViewById(R.id.edt_txt_username);
+            EditText txtPassword = dialog.findViewById(R.id.edit_txt_password_register);
 
-         btnCancel.setOnClickListener(l->{
-             dialog.cancel();
-         });
+            btnCancel.setOnClickListener(l -> {
+                dialog.cancel();
+            });
 
-         btnRegister.setOnClickListener(l->{
-             this.viewModel.executeRegister(
-                     txtUsername.getText().toString(),
-                     txtEmail.getText().toString(),
-                     txtPassword.getText().toString(),
-                     txtName.getText().toString(),
-                     this);
-         });
+            btnRegister.setOnClickListener(l -> {
+                this.viewModel.executeRegister(
+                        txtUsername.getText().toString(),
+                        txtEmail.getText().toString(),
+                        txtPassword.getText().toString(),
+                        txtName.getText().toString(),
+                        this);
+            });
 
-         dialog.show();
+            dialog.show();
+        }catch (DadosInvalidosException ex){
+            Snackbar.make(binding.loginScreen,"POR FAVOR PREENCHA OS DADOS",Snackbar.LENGTH_LONG).show();
+
+        }
     }
+
 
 
     private void initializeFields(){
@@ -102,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
         if ( token != null){
             var it = new Intent(LoginActivity.this,OngActivity.class);
             it.putExtra(TOKEN,TokenManager.getToken());
-            startActivity(it);
+            setResult(RESULT_OK,it);
             finish();
         }
         if (dialog != null){
