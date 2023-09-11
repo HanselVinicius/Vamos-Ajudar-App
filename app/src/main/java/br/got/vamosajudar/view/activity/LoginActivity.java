@@ -17,6 +17,7 @@ import br.got.vamosajudar.databinding.ActivityLoginBinding;
 import br.got.vamosajudar.infra.exceptions.DadosInvalidosException;
 import br.got.vamosajudar.infra.observer.Subscriber;
 import br.got.vamosajudar.model.user.token.TokenManager;
+import br.got.vamosajudar.utils.Utils;
 import br.got.vamosajudar.view_model.LoginActivityViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -48,7 +49,11 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
 
     private void login(){
         try {
-            this.viewModel.executeLogin(this.edt_username.getText().toString(), this.edt_password.getText().toString(), this);
+            if(Utils.isNetworkConnected(this)) {
+                this.viewModel.executeLogin(this.edt_username.getText().toString(), this.edt_password.getText().toString(), this);
+            }else {
+                Snackbar.make(binding.loginScreen,"POR FAVOR CONECTE-SE A INTERNET",Snackbar.LENGTH_LONG).show();
+            }
         }catch (DadosInvalidosException ex){
             Snackbar.make(binding.loginScreen,"POR FAVOR PREENCHA OS DADOS",Snackbar.LENGTH_LONG).show();
         }
@@ -77,12 +82,17 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
             });
 
             btnRegister.setOnClickListener(l -> {
-                this.viewModel.executeRegister(
-                        txtUsername.getText().toString(),
-                        txtEmail.getText().toString(),
-                        txtPassword.getText().toString(),
-                        txtName.getText().toString(),
-                        this);
+                if(Utils.isNetworkConnected(this)) {
+                    this.viewModel.executeRegister(
+                            txtUsername.getText().toString(),
+                            txtEmail.getText().toString(),
+                            txtPassword.getText().toString(),
+                            txtName.getText().toString(),
+                            this);
+                }else {
+                    Snackbar.make(binding.loginScreen,"POR FAVOR CONECTE-SE A INTERNET",Snackbar.LENGTH_LONG).show();
+
+                }
             });
 
             dialog.show();
@@ -104,7 +114,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
     @Override
     public void update(){
         String token = TokenManager.getToken();
-        if ( token != null){
+        if (token != null){
             var it = new Intent(LoginActivity.this,OngActivity.class);
             it.putExtra(TOKEN,TokenManager.getToken());
             setResult(RESULT_OK,it);
@@ -114,5 +124,12 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
             dialog.cancel();
             Snackbar.make(binding.loginScreen,"REGISTRO EFETUADO COM SUCESSO",Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void updateOnError(Exception ex) {
+        //uma bazuca pra matar uma barata de fato...
+        Snackbar.make(binding.loginScreen,"USUÁRIO NÃO ENCONTRADO",Snackbar.LENGTH_LONG).show();
+
     }
 }

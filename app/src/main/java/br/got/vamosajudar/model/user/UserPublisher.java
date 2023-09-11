@@ -19,9 +19,17 @@ public class UserPublisher implements Publisher {
         subscribers.forEach(Subscriber::update);
     }
 
+
+
     @Override
     public void subscribe(Subscriber sub) {
         this.subscribers.add(sub);
+    }
+
+    @Override
+    public void notifySubscribersOnError(Exception ex) {
+        subscribers.forEach(subscriber -> subscriber.updateOnError(ex));
+
     }
 
 

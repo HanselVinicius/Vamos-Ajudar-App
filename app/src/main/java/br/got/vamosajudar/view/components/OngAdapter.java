@@ -1,6 +1,6 @@
 package br.got.vamosajudar.view.components;
 
-import android.util.Log;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +23,11 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
     //talvez usar um dto???
     private final List<Ong> ongList;
 
-    public OngAdapter(List<Ong> ongList) {
+    private final Context context;
 
+    public OngAdapter(List<Ong> ongList, Context context) {
         this.ongList = ongList;
+        this.context = context;
     }
 
     @NonNull
@@ -50,6 +52,19 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
                 holder.ongTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 
             }
+            onClicks(holder,ong);
+    }
+
+    private void onClicks(OngViewHolder holder,Ong ong){
+        holder.ongTitle.setOnClickListener(l->{
+            //abre a tela de detalhamento
+        });
+        holder.ongDescription.setOnClickListener(l->{
+            //abre a tela de detalhamento
+        });
+        holder.ongImageView.setOnClickListener(l->{
+            //abre a tela de detalhamento
+        });
     }
 
     @Override
@@ -71,4 +86,6 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
             this.ongDescription = itemView.findViewById(R.id.ongDescriptionTextView);
         }
     }
+
+
 }

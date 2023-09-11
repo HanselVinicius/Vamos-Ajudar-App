@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import br.got.vamosajudar.Application;
 import br.got.vamosajudar.infra.exceptions.DadosInvalidosException;
+import br.got.vamosajudar.infra.exceptions.ForbiddenException;
 import br.got.vamosajudar.infra.exceptions.LoginException;
 import br.got.vamosajudar.infra.observer.Publisher;
 import br.got.vamosajudar.infra.observer.Subscriber;
@@ -48,7 +49,6 @@ public class LoginActivityViewModel extends ViewModel implements UserCallback {
 
 
     public void executeRegister(String login,String email,String password,String name,Subscriber sub){
-            //todo strategy verificar se tem internet se os dados estão corretos etc ??
             if (login.isBlank() || email.isBlank() || password.isBlank() || name.isBlank()){
                 throw new DadosInvalidosException("DADOS INVALIDOS OU NÃO INSERIDOS");
             }
@@ -57,8 +57,7 @@ public class LoginActivityViewModel extends ViewModel implements UserCallback {
     }
 
 
-    //todo melhor verificação de login com esse callback de token ,
-    // aplicar o mesmo padrão para a tela de ongs para avisar internet desconectada etc
+
     @Override
     public void onTokenSaved() {
         userPublisher.notifySubscribers();
@@ -67,7 +66,7 @@ public class LoginActivityViewModel extends ViewModel implements UserCallback {
     @Override
     public void onTokenError(Exception ex) {
         Log.e(TAG, "onTokenError: ERRO DO TOKEN",ex );
-        // verificacao de tipos de exceptions para melhor tratamento
+        userPublisher.notifySubscribersOnError(ex);
     }
 
     @Override

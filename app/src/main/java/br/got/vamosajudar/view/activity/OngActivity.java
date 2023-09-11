@@ -5,7 +5,6 @@ import static br.got.vamosajudar.view.activity.LoginActivity.TOKEN;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,7 +20,6 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import br.got.vamosajudar.databinding.ActivityOngBinding;
@@ -77,7 +75,7 @@ public class OngActivity extends AppCompatActivity {
             this.ongResponse = ongs;
             this.ongList.addAll(ongs.getContent().stream().distinct().collect(Collectors.toList()));
             if (ongAdapter == null) {
-                ongAdapter = new OngAdapter(this.ongList);
+                ongAdapter = new OngAdapter(this.ongList, getApplicationContext());
                 recyclerView.setAdapter(ongAdapter);
             }else {
                 //todo aplicar melhoes praticas para atualizar a tela
@@ -117,7 +115,7 @@ public class OngActivity extends AppCompatActivity {
 
 
         //recyvler view
-        this.recyclerView.setAdapter(new OngAdapter(this.ongList));
+        this.recyclerView.setAdapter(new OngAdapter(this.ongList, getApplicationContext()));
         this.recyclerView.addOnScrollListener(onScroll());
 
 

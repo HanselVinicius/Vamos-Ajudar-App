@@ -5,4 +5,5 @@ public interface Subscriber {
 
      void update();
 
+     void updateOnError(Exception ex);
 }

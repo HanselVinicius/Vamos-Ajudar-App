@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import br.got.vamosajudar.infra.Api;
 import br.got.vamosajudar.infra.Repository;
+import br.got.vamosajudar.infra.exceptions.ForbiddenException;
 import br.got.vamosajudar.infra.exceptions.LoginException;
 import br.got.vamosajudar.model.user.dto.LoginDTO;
 import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
@@ -38,7 +39,8 @@ public class UserRepository implements Repository {
                     TokenManager.saveToken(token);
                     callback.onTokenSaved();
                 }else {
-
+                     Log.e(TAG, "onResponse: quero saber os codigos e erros" +response.raw() );
+                     callback.onTokenError(new ForbiddenException(response.message(),response.code()));
                  }
             }
 
@@ -49,7 +51,6 @@ public class UserRepository implements Repository {
         });
     }
 
-    //todo register
     public void register(UserRegisterDTO userRegisterDTO,UserCallback userCallback){
         Call<UserRegisterDTO> call = api.registerUser(userRegisterDTO);
         call.enqueue(new Callback<>() {
@@ -62,7 +63,7 @@ public class UserRepository implements Repository {
 
             @Override
             public void onFailure(Call<UserRegisterDTO> call, Throwable t) {
-
+                Log.e(TAG, "onFailure: FALHA NA REQUISICAO DE REGISTRO",t );
             }
         });
     }

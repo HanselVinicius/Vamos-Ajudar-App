@@ -7,6 +7,7 @@ public interface Publisher {
 
     void subscribe(Subscriber sub);
 
+    void notifySubscribersOnError(Exception ex);
 
 
 }
