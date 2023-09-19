@@ -1,6 +1,7 @@
 package br.got.vamosajudar.view.components;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import java.util.List;
 
 import br.got.vamosajudar.R;
 import br.got.vamosajudar.model.ong.Ong;
+import br.got.vamosajudar.view.activity.LoginActivity;
+import br.got.vamosajudar.view.activity.OngDetailActivity;
 
 public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
 
@@ -24,6 +27,10 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
     private final List<Ong> ongList;
 
     private final Context context;
+
+    public final static String ONG = "ONG";
+
+
 
     public OngAdapter(List<Ong> ongList, Context context) {
         this.ongList = ongList;
@@ -56,15 +63,15 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
     }
 
     private void onClicks(OngViewHolder holder,Ong ong){
-        holder.ongTitle.setOnClickListener(l->{
+        var it = new Intent(context, OngDetailActivity.class);
+        it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        it.putExtra(ONG,ong);
+        holder.itemView.setOnClickListener(l->{
             //abre a tela de detalhamento
+            context.startActivity(it);
+
         });
-        holder.ongDescription.setOnClickListener(l->{
-            //abre a tela de detalhamento
-        });
-        holder.ongImageView.setOnClickListener(l->{
-            //abre a tela de detalhamento
-        });
+
     }
 
     @Override

@@ -1,6 +1,8 @@
 package br.got.vamosajudar.model.ong;
 
-public class Contact {
+import java.io.Serializable;
+
+public class Contact implements Serializable {
     private String email;
     private String phone;
     private String website;

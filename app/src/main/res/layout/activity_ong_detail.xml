@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_branco"
+            android:contentDescription="Ong Image"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/name_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome da ONG"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="start"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/descricao_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Descrição: Em desenvolvimento..."
+            android:textSize="16sp"
+            android:gravity="start"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/objetivo_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Objetivo: Em desenvolvimento..."
+            android:textSize="16sp"
+            android:gravity="start"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/endereco_view_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Endereço:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="start"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/rua_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rua: Em desenvolvimento..."
+            android:textSize="16sp"
+            android:gravity="start"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/cidade_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cidade: Em desenvolvimento..."
+            android:textSize="16sp"
+            android:gravity="start"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/pais_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="País: Em desenvolvimento..."
+            android:textSize="16sp"
+            android:gravity="start"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/ong_goal_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contato:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="start"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:id="@+id/email_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email: emdesenvolvimento@ong.com"
+            android:textSize="16sp"
+            android:gravity="start"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/telefone_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telefone: (123) 456-7890"
+            android:textSize="16sp"
+            android:gravity="start"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/site_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Site: www.ong.com"
+            android:textSize="16sp"
+            android:gravity="start"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

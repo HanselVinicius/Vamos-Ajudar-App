@@ -1,8 +1,9 @@
 package br.got.vamosajudar.model.ong;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Ong {
+public class Ong implements Serializable {
     private String id;
     private String name;
     private String description;
