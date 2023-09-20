@@ -8,6 +8,18 @@ public class Contact implements Serializable {
     private String website;
 
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
     @Override
     public String toString() {
         return "Contact{" +

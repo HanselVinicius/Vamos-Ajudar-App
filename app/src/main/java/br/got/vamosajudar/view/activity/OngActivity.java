@@ -154,12 +154,6 @@ public class OngActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
     private void swipeAction(){
         this.ongList.clear();
         this.recyclerView.getAdapter().notifyDataSetChanged();

@@ -36,6 +36,22 @@ public class Ong implements Serializable {
         return verified;
     }
 
+    public String getGoal() {
+        return goal;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
     @Override
     public String toString() {
         return "Ong{" +

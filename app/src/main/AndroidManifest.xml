@@ -21,8 +21,7 @@
             android:exported="false" />
         <activity
             android:name=".view.activity.OngActivity"
-            android:exported="false" /> <!-- <activity android:name=".view.MainActivity" -->
-        <!-- android:exported="true"/> -->
+            android:exported="false" />
         <activity
             android:name=".view.activity.LoginActivity"
             android:exported="true" />
