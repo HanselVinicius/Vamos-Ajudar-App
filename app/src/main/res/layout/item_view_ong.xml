@@ -35,7 +35,7 @@
                 android:layout_below="@+id/ongImageView"
                 android:layout_marginTop="8dp"
                 android:drawablePadding="8dp"
-                android:text="Title Text"
+                android:text="@string/titulo_ong_view"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:drawableEndCompat="@drawable/verified_star" />
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ongTitleTextView"
                 android:layout_marginTop="8dp"
-                android:text="Description Text" />
+                android:text="@string/descri_o_ong" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

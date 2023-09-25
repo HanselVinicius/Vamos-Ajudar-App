@@ -25,7 +25,7 @@
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:text="ong não possui pix copia e cola"
+        android:text="@string/ong_n_o_possui_pix_copia_e_cola"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/qr_code_img"

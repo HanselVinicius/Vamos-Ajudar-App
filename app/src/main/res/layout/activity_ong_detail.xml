@@ -30,7 +30,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="16dp"
                 android:adjustViewBounds="true"
-                android:contentDescription="Ong Image"
+                android:contentDescription="@string/imagem_da_ong_detail"
                 android:src="@drawable/logo_branco"
 
                 />
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="start"
-                android:text="Nome da ONG"
+                android:text=""
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:gravity="start"
-                android:text="Descrição: Em desenvolvimento..."
+                android:text=""
                 android:textSize="16sp" />
 
             <TextView
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="start"
-                android:text="Objetivo: Em desenvolvimento..."
+                android:text=""
                 android:textSize="16sp" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="start"
-                android:text="Rua: Em desenvolvimento..."
+                android:text=""
                 android:textSize="16sp" />
 
             <TextView
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="start"
-                android:text="Cidade: Em desenvolvimento..."
+                android:text=""
                 android:textSize="16sp" />
 
             <TextView
@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="start"
-                android:text="País: Em desenvolvimento..."
+                android:text=""
                 android:textSize="16sp" />
 
             <TextView
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="start"
-                android:text="Email: emdesenvolvimento@ong.com"
+                android:text=""
                 android:textSize="16sp" />
 
             <TextView
@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="start"
-                android:text="Telefone: (123) 456-7890"
+                android:text=""
                 android:textSize="16sp" />
 
             <TextView
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="start"
-                android:text="Site: www.ong.com"
+                android:text=""
                 android:textSize="16sp" />
 
             <Button

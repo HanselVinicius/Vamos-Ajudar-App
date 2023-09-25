@@ -8,4 +8,21 @@
     <string name="txt_sem_registro">Entrar Sem Registro</string>
     <string name="txt_esqueceu_senha">Esqueceu sua senha?</string>
     <string name="cancelar">CANCELAR</string>
+    <string name="name_register_ong">Nome:</string>
+    <string name="description_register_ong">Descrição:</string>
+    <string name="goal_register_ong">Objetivo:</string>
+    <string name="imagem_da_ong_detail">Imagem da Ong</string>
+    <string name="ong_n_o_possui_pix_copia_e_cola">ong não possui pix copia e cola</string>
+    <string name="nome_login">Nome</string>
+    <string name="email_login">Email</string>
+    <string name="password_login">Password</string>
+    <string name="nome_de_usu_rio_login">Nome de usuário</string>
+    <string name="registrar_login">Registrar</string>
+    <string name="cancelar_login">Cancelar</string>
+    <string name="titulo_ong_view">Titulo</string>
+    <string name="descri_o_ong">Descrição</string>
+    <string name="vamosajudar_register_ong">VamosAjudar</string>
+    <string name="a_melhor_ong_register_ong">A melhor ong</string>
+    <string name="ajudar_register_ong">Ajudar</string>
+    <string name="endere_o_register_ong">Endereço:</string>
 </resources>
