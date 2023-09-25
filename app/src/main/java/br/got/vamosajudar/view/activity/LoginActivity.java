@@ -91,7 +91,6 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
                             this);
                 }else {
                     Snackbar.make(binding.loginScreen,"POR FAVOR CONECTE-SE A INTERNET",Snackbar.LENGTH_LONG).show();
-
                 }
             });
 

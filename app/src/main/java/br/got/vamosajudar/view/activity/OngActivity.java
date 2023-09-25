@@ -108,7 +108,6 @@ public class OngActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent mainIntent = new Intent(OngActivity.this, LoginActivity.class);
                         launcher.launch(mainIntent);
-//                        startActivityForResult(mainIntent,100);
                     }
                 }
         );

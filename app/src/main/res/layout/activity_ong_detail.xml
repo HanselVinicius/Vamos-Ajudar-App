@@ -2,19 +2,26 @@
 <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/detail_screen"
+    >
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:layout_gravity="center"
     app:cardElevation="4dp"
-    app:cardCornerRadius="12dp">
+    app:cardCornerRadius="12dp"
+
+        >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="16dp"
+            android:layout_gravity="center"
+            >
 
             <ImageView
                 android:id="@+id/imageView"
@@ -24,7 +31,9 @@
                 android:layout_marginBottom="16dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="Ong Image"
-                android:src="@drawable/logo_branco" />
+                android:src="@drawable/logo_branco"
+
+                />
 
             <TextView
                 android:id="@+id/name_id"
@@ -136,6 +145,7 @@
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:text="Doar"
+                android:textColor="@color/design_default_color_on_primary"
                 android:backgroundTint="@color/secundary_button_green"
                 android:textSize="16sp" />
 
