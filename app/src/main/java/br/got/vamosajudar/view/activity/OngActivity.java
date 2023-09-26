@@ -5,7 +5,10 @@ import static br.got.vamosajudar.view.activity.LoginActivity.TOKEN;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -22,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.got.vamosajudar.R;
 import br.got.vamosajudar.databinding.ActivityOngBinding;
 import br.got.vamosajudar.model.ong.Ong;
 import br.got.vamosajudar.model.ong.OngResponse;
@@ -40,6 +45,7 @@ public class OngActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    //todo alterar talvez para um Set
     private List<Ong> ongList;
 
     private OngResponse<Ong> ongResponse;
@@ -52,6 +58,10 @@ public class OngActivity extends AppCompatActivity {
 
     private OngAdapter ongAdapter;
 
+    private DrawerLayout drawerLayout;
+
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    public static final String INTENT_TOKEN_ONG_REGISTER_ACTIVITY = "INTENT_TOKEN_REGISTER_ONG_ACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,29 +104,38 @@ public class OngActivity extends AppCompatActivity {
 
                 if (resultCode == RESULT_OK && data != null) {
                     String token = data.getStringExtra(TOKEN);
-                    Log.e("FINISH_INTENT_PARSING", "onActivityResult: token " + token);
+                    updateInterfaceOnToken(token);
                 }
             }
     );
+
+    private void updateInterfaceOnToken(String token){
+        this.user_icon.setOnClickListener(
+                v->{
+//                    drawerLayout.openDrawer(GravityCompat.START);
+                    Intent intent = new Intent(OngActivity.this, OngRegisterActivity.class);
+                    intent.putExtra(INTENT_TOKEN_ONG_REGISTER_ACTIVITY,token);
+                    startActivity(intent);
+                }
+        );
+    }
 
     private void initializeScreen(){
 
         //user icon
         this.user_icon.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent mainIntent = new Intent(OngActivity.this, LoginActivity.class);
-                        launcher.launch(mainIntent);
-                    }
+                v -> {
+                    Intent mainIntent = new Intent(OngActivity.this, LoginActivity.class);
+                    launcher.launch(mainIntent);
                 }
         );
 
+        //drawer layout
+        this.drawerLayout = binding.navigationDrawer;
 
         //recyvler view
         this.recyclerView.setAdapter(new OngAdapter(this.ongList, getApplicationContext()));
         this.recyclerView.addOnScrollListener(onScroll());
-
 
         // swipe refresh
         this.swipeRefreshLayout = binding.swipeRefreshLayout;
@@ -125,6 +144,7 @@ public class OngActivity extends AppCompatActivity {
             swipeRefreshLayout.setRefreshing(false);
         });
     }
+
 
 
     private RecyclerView.OnScrollListener onScroll(){

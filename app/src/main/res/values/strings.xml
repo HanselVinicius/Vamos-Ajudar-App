@@ -25,4 +25,7 @@
     <string name="a_melhor_ong_register_ong">A melhor ong</string>
     <string name="ajudar_register_ong">Ajudar</string>
     <string name="endere_o_register_ong">Endereço:</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
 </resources>

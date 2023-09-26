@@ -52,9 +52,9 @@
                 android:id="@+id/ongDescriptionEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="name"
                 android:hint="@string/a_melhor_ong_register_ong"
-                android:padding="8dp"
-                android:autofillHints="name" />
+                android:padding="8dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -63,6 +63,7 @@
                 android:text="@string/goal_register_ong"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
 
             <EditText
                 android:id="@+id/ongGoalEditText"
@@ -80,73 +81,55 @@
                 android:textStyle="bold" />
 
 
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/ong_street"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:autofillHints="postalAddress"
                     android:hint="Rua"
-                    android:padding="8dp"
-                    android:autofillHints="postalAddress" />
+                    android:padding="8dp" />
 
                 <EditText
                     android:id="@+id/ong_number_addresss"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:hint="Número"
+                    android:layout_weight="1"
                     android:autofillHints="postalAddress"
+                    android:hint="Número"
+                    android:inputType="number"
                     android:padding="8dp" />
+
                 <EditText
                     android:id="@+id/postal_code"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:hint="CEP"
+                    android:layout_weight="1"
                     android:autofillHints="postalCode"
+                    android:hint="CEP"
+                    android:inputType="number"
                     android:padding="8dp" />
+
                 <EditText
                     android:id="@+id/estado"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:inputType="textPostalAddress"
-                    android:hint="Estado"
+                    android:layout_weight="1"
                     android:autofillHints="postalAddress"
+                    android:hint="Estado"
+                    android:inputType="textPostalAddress"
                     android:padding="8dp" />
+
             </LinearLayout>
 
-            <EditText
 
-                android:id="@+id/cidade"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:inputType="textNoSuggestions"
-                android:hint="Cidade"
-                android:autofillHints="postalAddress"
-                android:padding="8dp" />
 
-            <EditText
-
-                android:id="@+id/pais"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:inputType="textNoSuggestions"
-                android:hint="País"
-                android:autofillHints="postalAddress"
-                android:padding="8dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -159,37 +142,72 @@
             <EditText
 
                 android:id="@+id/email_id"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textWebEmailAddress"
-                android:hint="Email"
+                android:layout_weight="1"
                 android:autofillHints="emailAddress"
+                android:hint="Email"
+                android:inputType="textWebEmailAddress"
                 android:padding="8dp" />
+
 
             <EditText
 
                 android:id="@+id/phone_id"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:hint="(16)99999-9999"
+                android:layout_weight="1"
                 android:autofillHints="phone"
+                android:hint="(16)99999-9999"
+                android:inputType="phone"
                 android:padding="8dp" />
 
 
             <EditText
 
                 android:id="@+id/website_id"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:hint="www.vamosajudar.com.br"
+                android:layout_weight="1"
                 android:autofillHints="name"
+                android:hint="www.vamosajudar.com.br"
+                android:inputType="phone"
                 android:padding="8dp" />
 
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+
+                <Button
+                    android:id="@+id/confirm_creation_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="@string/confirmar"
+                    android:textColor="@color/design_default_color_on_primary"
+                    android:backgroundTint="@color/secundary_button_green"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/cancel_creation_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/cancelar_login"
+                    android:textColor="@color/design_default_color_on_primary"
+                    android:backgroundTint="@color/secundary_button_green"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
 
 

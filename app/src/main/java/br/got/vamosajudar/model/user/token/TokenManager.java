@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 
 public class TokenManager {
     private static SharedPreferences sharedPreferences;
-    private static final String TOKEN_KEY = "token";
+    public static final String TOKEN_KEY = "token";
 
 
     public static void initialize(SharedPreferences preferences){
