@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.MutableLiveData;
@@ -19,8 +20,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +39,7 @@ import br.got.vamosajudar.view_model.OngActivityViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class OngActivity extends AppCompatActivity {
+public class OngActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     private ActivityOngBinding binding;
@@ -60,6 +64,8 @@ public class OngActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
 
+    private Toolbar toolbar;
+
     private ActionBarDrawerToggle actionBarDrawerToggle;
     public static final String INTENT_TOKEN_ONG_REGISTER_ACTIVITY = "INTENT_TOKEN_REGISTER_ONG_ACTIVITY";
 
@@ -73,6 +79,7 @@ public class OngActivity extends AppCompatActivity {
         this.recyclerView = binding.recyclerView;
         this.linearLayoutManager = new LinearLayoutManager(this);
         this.user_icon = binding.userIcon;
+        this.toolbar = binding.myToolbar;
         recyclerView.setLayoutManager(linearLayoutManager);
         observeOngs();
         initializeScreen();
@@ -121,7 +128,6 @@ public class OngActivity extends AppCompatActivity {
     }
 
     private void initializeScreen(){
-
         //user icon
         this.user_icon.setOnClickListener(
                 v -> {
@@ -129,14 +135,12 @@ public class OngActivity extends AppCompatActivity {
                     launcher.launch(mainIntent);
                 }
         );
-
         //drawer layout
         this.drawerLayout = binding.navigationDrawer;
-
+        initDrawer(drawerLayout);
         //recyvler view
         this.recyclerView.setAdapter(new OngAdapter(this.ongList, getApplicationContext()));
         this.recyclerView.addOnScrollListener(onScroll());
-
         // swipe refresh
         this.swipeRefreshLayout = binding.swipeRefreshLayout;
         swipeRefreshLayout.setOnRefreshListener(()->{
@@ -145,7 +149,18 @@ public class OngActivity extends AppCompatActivity {
         });
     }
 
+    private void initDrawer(DrawerLayout drawerLayout) {
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,
+                R.string.nav_open,R.string.nav_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+    }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        return false;
+    }
 
     private RecyclerView.OnScrollListener onScroll(){
       return  new RecyclerView.OnScrollListener() {

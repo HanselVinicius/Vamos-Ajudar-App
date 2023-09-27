@@ -3,7 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="status_bar_color">#1a1f24</color>
-    <color name="primary_button_green">#59A52C</color>
-    <color name="secundary_button_green">#437d21</color>
+    <color name="primary_green">#59A52C</color>
+    <color name="secundary_green">#437d21</color>
 
 </resources>

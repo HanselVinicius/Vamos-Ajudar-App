@@ -55,7 +55,7 @@
                 android:text="@string/txt_login"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/secundary_button_green"
+                android:backgroundTint="@color/secundary_green"
                 android:textColor="@color/white" />
 
             <Button
@@ -65,7 +65,7 @@
                 android:text="@string/txt_register"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/secundary_button_green"
+                android:backgroundTint="@color/secundary_green"
                 android:textColor="@color/white" />
 
 

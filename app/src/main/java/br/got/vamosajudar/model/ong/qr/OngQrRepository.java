@@ -32,11 +32,7 @@ public class OngQrRepository implements Repository {
         callQr.enqueue(new Callback<QRDto>() {
             @Override
             public void onResponse(Call<QRDto> call, Response<QRDto> response) {
-                if (!response.isSuccessful()) {
-                    throw new QrCodeException("HOUVE UM ERRO AO BUSCAR O QR CODE");
-                }
                 qrDtoMutableLiveData.postValue(response.body());
-
             }
 
             @Override

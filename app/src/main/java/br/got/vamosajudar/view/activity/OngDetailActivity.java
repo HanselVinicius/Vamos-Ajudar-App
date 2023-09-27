@@ -81,7 +81,11 @@ public class OngDetailActivity extends AppCompatActivity {
         binding.siteId.setText(ong.getContact().getWebsite());
 
 
-        binding.donateButtonId.setOnClickListener(v-> dialogInitialize());
+        binding.donateButtonId.setOnClickListener(v->{
+            if (this.qrCode != null|| this.brCode != null) {
+                dialogInitialize();
+            }
+        });
 
     }
 
