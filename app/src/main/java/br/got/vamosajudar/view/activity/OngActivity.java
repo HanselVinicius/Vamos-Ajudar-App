@@ -66,7 +66,9 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
 
     private Toolbar toolbar;
 
-    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private String token;
+
+    private  NavigationView navigationView;
     public static final String INTENT_TOKEN_ONG_REGISTER_ACTIVITY = "INTENT_TOKEN_REGISTER_ONG_ACTIVITY";
 
     @Override
@@ -110,19 +112,16 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
                 Intent data = result.getData();
 
                 if (resultCode == RESULT_OK && data != null) {
-                    String token = data.getStringExtra(TOKEN);
-                    updateInterfaceOnToken(token);
+                     this.token = data.getStringExtra(TOKEN);
+                     updateInterfaceOnToken();
                 }
             }
     );
 
-    private void updateInterfaceOnToken(String token){
+    private void updateInterfaceOnToken(){
         this.user_icon.setOnClickListener(
                 v->{
-//                    drawerLayout.openDrawer(GravityCompat.START);
-                    Intent intent = new Intent(OngActivity.this, OngRegisterActivity.class);
-                    intent.putExtra(INTENT_TOKEN_ONG_REGISTER_ACTIVITY,token);
-                    startActivity(intent);
+                    navigationView.setVisibility(View.VISIBLE);
                 }
         );
     }
@@ -150,6 +149,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
     }
 
     private void initDrawer(DrawerLayout drawerLayout) {
+        navigationView = binding.navView;
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,
                 R.string.nav_open,R.string.nav_close);
         drawerLayout.addDrawerListener(toggle);
