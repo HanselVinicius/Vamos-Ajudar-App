@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn = "navigation_view">
 
-    <group
-        android:checkableBehavior="single">
-
-    </group>
+    <item
+        android:id="@+id/createOng"
+        android:icon="@drawable/user_ic"
+        android:title="Criar Ong"/>
 
 
 

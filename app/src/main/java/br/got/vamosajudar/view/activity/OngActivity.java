@@ -23,6 +23,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -69,6 +70,8 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
     private String token;
 
     private  NavigationView navigationView;
+
+    private View headerView;
     public static final String INTENT_TOKEN_ONG_REGISTER_ACTIVITY = "INTENT_TOKEN_REGISTER_ONG_ACTIVITY";
 
     @Override
@@ -119,10 +122,12 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
     );
 
     private void updateInterfaceOnToken(){
+        navigationView.setVisibility(View.VISIBLE);
+        ImageView headerImage = headerView.findViewById(R.id.profile_image);
+        TextView headerUsrName = headerView.findViewById(R.id.header_usr_name);
+        headerUsrName.setText("OBOA NOITE");
         this.user_icon.setOnClickListener(
-                v->{
-                    navigationView.setVisibility(View.VISIBLE);
-                }
+                v->{}
         );
     }
 
@@ -150,6 +155,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
 
     private void initDrawer(DrawerLayout drawerLayout) {
         navigationView = binding.navView;
+        headerView = navigationView.getHeaderView(0);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,
                 R.string.nav_open,R.string.nav_close);
         drawerLayout.addDrawerListener(toggle);
