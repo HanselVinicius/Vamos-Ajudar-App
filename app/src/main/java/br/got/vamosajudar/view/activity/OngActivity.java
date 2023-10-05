@@ -1,5 +1,6 @@
 package br.got.vamosajudar.view.activity;
 
+import static br.got.vamosajudar.view.activity.LoginActivity.PROFILE;
 import static br.got.vamosajudar.view.activity.LoginActivity.TOKEN;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -20,6 +21,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,6 +37,7 @@ import br.got.vamosajudar.R;
 import br.got.vamosajudar.databinding.ActivityOngBinding;
 import br.got.vamosajudar.model.ong.Ong;
 import br.got.vamosajudar.model.ong.OngResponse;
+import br.got.vamosajudar.view.components.NavHeaderMenuCreator;
 import br.got.vamosajudar.view.components.OngAdapter;
 import br.got.vamosajudar.view_model.OngActivityViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
@@ -43,6 +46,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class OngActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    private static final String TAG = "ONGACTIVITY";
     private ActivityOngBinding binding;
 
     private RecyclerView recyclerView;
@@ -116,19 +120,29 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
 
                 if (resultCode == RESULT_OK && data != null) {
                      this.token = data.getStringExtra(TOKEN);
+                     Log.e(TAG, "profile: "+data.getStringExtra(PROFILE) );
                      updateInterfaceOnToken();
                 }
             }
     );
 
+
+
     private void updateInterfaceOnToken(){
         navigationView.setVisibility(View.VISIBLE);
         ImageView headerImage = headerView.findViewById(R.id.profile_image);
         TextView headerUsrName = headerView.findViewById(R.id.header_usr_name);
+        new NavHeaderMenuCreator(navigationView,this).initializeItems();
         headerUsrName.setText("OBOA NOITE");
         this.user_icon.setOnClickListener(
                 v->{}
         );
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.drawer_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void initializeScreen(){

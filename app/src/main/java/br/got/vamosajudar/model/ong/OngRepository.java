@@ -36,7 +36,6 @@ public class OngRepository implements Repository {
                     @Override
                     public void onResponse(Call<OngResponse<Ong>> call, Response<OngResponse<Ong>> response) {
 
-
                         if (response.isSuccessful()){
                             ongList.postValue(response.body());
                         }else {

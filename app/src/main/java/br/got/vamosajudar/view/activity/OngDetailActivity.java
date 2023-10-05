@@ -121,7 +121,6 @@ public class OngDetailActivity extends AppCompatActivity {
         try {
             LiveData<QRDto> qr = this.detailActivityViewModel.getQr(ong.getId());
             qr.observe(this, data -> {
-                Log.e(TAG, "getQrAndBrCode: dto " + data);
                 if (data != null) {
                     this.qrCode = data.getQrcode64();
                     this.brCode = data.getBrcode().toString();

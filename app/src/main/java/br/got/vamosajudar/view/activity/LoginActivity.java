@@ -1,11 +1,14 @@
 package br.got.vamosajudar.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +19,7 @@ import br.got.vamosajudar.R;
 import br.got.vamosajudar.databinding.ActivityLoginBinding;
 import br.got.vamosajudar.infra.exceptions.DadosInvalidosException;
 import br.got.vamosajudar.infra.observer.Subscriber;
+import br.got.vamosajudar.model.user.dto.ProfileDTO;
 import br.got.vamosajudar.model.user.token.TokenManager;
 import br.got.vamosajudar.utils.Utils;
 import br.got.vamosajudar.view_model.LoginActivityViewModel;
@@ -24,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity implements Subscriber {
 
+    public static final String PROFILE = "PROFILE";
     public LoginActivityViewModel viewModel;
     private Button btn_login;
     private Button btn_register;
@@ -34,6 +39,10 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
 
     private Dialog dialog;
 
+    private String profileDTO;
+
+    private MutableLiveData<String> profileDTOMutableLiveData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +51,13 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
         onClicks();
         setContentView(binding.getRoot());
         this.viewModel = new ViewModelProvider(this).get(LoginActivityViewModel.class);
+        this.profileDTOMutableLiveData = new MutableLiveData<>();
+        profileDTOMutableLiveData.observe(this,profileDTO -> {
+            this.profileDTO = profileDTO;
+
+        }
+        );
+
     }
 
 
@@ -77,9 +93,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
             EditText txtUsername = dialog.findViewById(R.id.edt_txt_username);
             EditText txtPassword = dialog.findViewById(R.id.edit_txt_password_register);
 
-            btnCancel.setOnClickListener(l -> {
-                dialog.cancel();
-            });
+            btnCancel.setOnClickListener(l -> dialog.cancel());
 
             btnRegister.setOnClickListener(l -> {
                 if(Utils.isNetworkConnected(this)) {
@@ -100,7 +114,9 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
 
         }
     }
-
+    public void getProfile(String token){
+        this.viewModel.executeGetProfile(token,this.profileDTOMutableLiveData);
+    }
 
 
     private void initializeFields(){
@@ -114,8 +130,11 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
     public void update(){
         String token = TokenManager.getToken();
         if (token != null){
+            getProfile(token);
             var it = new Intent(LoginActivity.this,OngActivity.class);
             it.putExtra(TOKEN,TokenManager.getToken());
+            //todo resolver porque o profileDTO não termina o processamento antes de dar o finish
+            it.putExtra(PROFILE,this.profileDTO);
             setResult(RESULT_OK,it);
             finish();
         }

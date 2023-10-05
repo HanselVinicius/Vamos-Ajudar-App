@@ -2,12 +2,28 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn = "navigation_view">
+    tools:showIn = "navigation_view"
+    >
 
     <item
         android:id="@+id/createOng"
-        android:icon="@drawable/user_ic"
-        android:title="Criar Ong"/>
+        android:icon="@drawable/add_icon_24"
+        android:title="Criar Ong"
+        />
+
+    <item
+        android:id="@+id/registerPhoto"
+        android:icon="@drawable/add_photo_icon_24"
+        android:title="Registrar Foto de Usuário"
+        />
+
+    <item
+        android:id="@+id/logOut"
+        android:icon="@drawable/baseline_login_24"
+        android:title="Sair"
+        />
+
+
 
 
 

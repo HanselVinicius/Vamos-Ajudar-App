@@ -3,18 +3,20 @@ package br.got.vamosajudar.view_model;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import javax.inject.Inject;
 
 import br.got.vamosajudar.Application;
 import br.got.vamosajudar.infra.exceptions.DadosInvalidosException;
-import br.got.vamosajudar.infra.exceptions.ForbiddenException;
 import br.got.vamosajudar.infra.exceptions.LoginException;
 import br.got.vamosajudar.infra.observer.Publisher;
 import br.got.vamosajudar.infra.observer.Subscriber;
 import br.got.vamosajudar.model.user.UserRepository;
 import br.got.vamosajudar.model.user.dto.LoginDTO;
+import br.got.vamosajudar.model.user.dto.ProfileDTO;
 import br.got.vamosajudar.model.user.dto.UserRegisterDTO;
 import br.got.vamosajudar.model.user.token.UserCallback;
 import dagger.hilt.android.lifecycle.HiltViewModel;
@@ -26,6 +28,7 @@ public class LoginActivityViewModel extends ViewModel implements UserCallback {
 
     private final Publisher userPublisher = Application.getUserPublisher();
     private final UserRepository repository;
+
 
     @Inject
     public LoginActivityViewModel(UserRepository repository){
@@ -44,6 +47,19 @@ public class LoginActivityViewModel extends ViewModel implements UserCallback {
         }catch (LoginException  ex){
             this.onTokenError(ex);
             Log.e(TAG, "executeLogin: ERRO NO LOGIN" ,ex );
+        }
+    }
+
+    public void executeGetProfile(String token,MutableLiveData<String> profileDTOMutableLiveData){
+        try {
+            if (token.isBlank()) {
+                throw new DadosInvalidosException("DADOS INVALIDOS OU NÃO INSERIDOS");
+            }
+            this.repository.getProfile(this,token,profileDTOMutableLiveData);
+
+        }catch (Exception ex){
+            Log.e(TAG, "executeGetProfile: ERRO NO GET DO PROFILE",ex );
+            this.onTokenError(ex);
         }
     }
 
