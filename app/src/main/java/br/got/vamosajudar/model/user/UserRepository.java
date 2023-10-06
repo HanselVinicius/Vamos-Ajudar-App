@@ -12,7 +12,6 @@ import br.got.vamosajudar.infra.exceptions.ForbiddenException;
 import br.got.vamosajudar.infra.exceptions.LoginException;
 import br.got.vamosajudar.model.user.dto.LoginDTO;
 import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
-import br.got.vamosajudar.model.user.dto.ProfileDTO;
 import br.got.vamosajudar.model.user.dto.UserRegisterDTO;
 import br.got.vamosajudar.model.user.token.UserCallback;
 import br.got.vamosajudar.model.user.token.TokenManager;
@@ -30,7 +29,7 @@ public class UserRepository implements Repository {
         this.api = api;
     }
 
-    public void login(LoginDTO dto, UserCallback callback) throws LoginException{
+    public void login(LoginDTO dto, UserCallback callback, MutableLiveData<LoginResponseDTO> loginResponseLiveData) throws LoginException{
         Call<LoginResponseDTO> call = api.login(dto);
         call.enqueue(new Callback<>() {
             @Override
@@ -39,6 +38,7 @@ public class UserRepository implements Repository {
                     LoginResponseDTO res = response.body();
                     String token = res.getToken();
                     TokenManager.saveToken(token);
+                    loginResponseLiveData.postValue(res);
                     callback.onTokenSaved();
                 }else {
                      callback.onTokenError(new ForbiddenException(response.message(),response.code()));
@@ -51,7 +51,7 @@ public class UserRepository implements Repository {
             }
         });
     }
-
+    @Deprecated
     public void getProfile(UserCallback callback, String token, MutableLiveData<String> profileLiveData){
         String authTokent = "Bearer " +token;
         Call<String> call = api.getProfile(authTokent);

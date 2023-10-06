@@ -1,14 +1,12 @@
 package br.got.vamosajudar.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +17,7 @@ import br.got.vamosajudar.R;
 import br.got.vamosajudar.databinding.ActivityLoginBinding;
 import br.got.vamosajudar.infra.exceptions.DadosInvalidosException;
 import br.got.vamosajudar.infra.observer.Subscriber;
-import br.got.vamosajudar.model.user.dto.ProfileDTO;
+import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
 import br.got.vamosajudar.model.user.token.TokenManager;
 import br.got.vamosajudar.utils.Utils;
 import br.got.vamosajudar.view_model.LoginActivityViewModel;
@@ -35,13 +33,12 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
     private EditText edt_username;
     private EditText edt_password;
     private ActivityLoginBinding binding;
-    public static final String TOKEN = "TOKEN";
+    public static final String USER = "USER";
 
     private Dialog dialog;
 
-    private String profileDTO;
+    private MutableLiveData<LoginResponseDTO> loginResponseLiveData;
 
-    private MutableLiveData<String> profileDTOMutableLiveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,22 +48,14 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
         onClicks();
         setContentView(binding.getRoot());
         this.viewModel = new ViewModelProvider(this).get(LoginActivityViewModel.class);
-        this.profileDTOMutableLiveData = new MutableLiveData<>();
-        profileDTOMutableLiveData.observe(this,profileDTO -> {
-            this.profileDTO = profileDTO;
-
-        }
-        );
-
+        this.loginResponseLiveData = new MutableLiveData<>();
     }
-
-
 
 
     private void login(){
         try {
             if(Utils.isNetworkConnected(this)) {
-                this.viewModel.executeLogin(this.edt_username.getText().toString(), this.edt_password.getText().toString(), this);
+             this.viewModel.executeLogin(this.edt_username.getText().toString(), this.edt_password.getText().toString(), this,loginResponseLiveData);
             }else {
                 Snackbar.make(binding.loginScreen,"POR FAVOR CONECTE-SE A INTERNET",Snackbar.LENGTH_LONG).show();
             }
@@ -114,9 +103,6 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
 
         }
     }
-    public void getProfile(String token){
-        this.viewModel.executeGetProfile(token,this.profileDTOMutableLiveData);
-    }
 
 
     private void initializeFields(){
@@ -126,18 +112,21 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
         this.edt_password = binding.editTextPassword;
     }
 
+    /** de fato o uso de callback e um observable aqui é muito overkill mas como se trata de um projeto de estudo para a faculdade, porque não?
+     mas tendo sempre em vista que fazer uma infraestrutura toda dessa para o contexto atual é complexidade desnecessaria
+     "an idiot admires complexity a genius admires simplicity"
+     */
     @Override
     public void update(){
-        String token = TokenManager.getToken();
-        if (token != null){
-            getProfile(token);
-            var it = new Intent(LoginActivity.this,OngActivity.class);
-            it.putExtra(TOKEN,TokenManager.getToken());
-            //todo resolver porque o profileDTO não termina o processamento antes de dar o finish
-            it.putExtra(PROFILE,this.profileDTO);
-            setResult(RESULT_OK,it);
-            finish();
-        }
+        this.loginResponseLiveData.observe(this,
+                loginResponseDTO -> {
+                if (loginResponseDTO != null){
+                    var it = new Intent(LoginActivity.this,OngActivity.class);
+                    it.putExtra(USER,loginResponseDTO);
+                    setResult(RESULT_OK,it);
+                    finish();
+                }
+        });
         if (dialog != null){
             dialog.cancel();
             Snackbar.make(binding.loginScreen,"REGISTRO EFETUADO COM SUCESSO",Snackbar.LENGTH_LONG).show();

@@ -1,7 +1,6 @@
 package br.got.vamosajudar.view.activity;
 
-import static br.got.vamosajudar.view.activity.LoginActivity.PROFILE;
-import static br.got.vamosajudar.view.activity.LoginActivity.TOKEN;
+import static br.got.vamosajudar.view.activity.LoginActivity.USER;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -9,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,8 +17,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +33,7 @@ import br.got.vamosajudar.R;
 import br.got.vamosajudar.databinding.ActivityOngBinding;
 import br.got.vamosajudar.model.ong.Ong;
 import br.got.vamosajudar.model.ong.OngResponse;
+import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
 import br.got.vamosajudar.view.components.NavHeaderMenuCreator;
 import br.got.vamosajudar.view.components.OngAdapter;
 import br.got.vamosajudar.view_model.OngActivityViewModel;
@@ -71,12 +68,11 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
 
     private Toolbar toolbar;
 
-    private String token;
+    private LoginResponseDTO user;
 
     private  NavigationView navigationView;
 
     private View headerView;
-    public static final String INTENT_TOKEN_ONG_REGISTER_ACTIVITY = "INTENT_TOKEN_REGISTER_ONG_ACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,21 +115,20 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
                 Intent data = result.getData();
 
                 if (resultCode == RESULT_OK && data != null) {
-                     this.token = data.getStringExtra(TOKEN);
-                     Log.e(TAG, "profile: "+data.getStringExtra(PROFILE) );
-                     updateInterfaceOnToken();
+                     this.user = (LoginResponseDTO) data.getSerializableExtra(USER);
+                     updateInterfaceOnToken(user);
                 }
             }
     );
 
 
 
-    private void updateInterfaceOnToken(){
+    private void updateInterfaceOnToken(LoginResponseDTO user){
         navigationView.setVisibility(View.VISIBLE);
         ImageView headerImage = headerView.findViewById(R.id.profile_image);
         TextView headerUsrName = headerView.findViewById(R.id.header_usr_name);
-        new NavHeaderMenuCreator(navigationView,this).initializeItems();
-        headerUsrName.setText("OBOA NOITE");
+        new NavHeaderMenuCreator(navigationView,this).initializeItems(user);
+        headerUsrName.setText(user.getLogin());
         this.user_icon.setOnClickListener(
                 v->{}
         );

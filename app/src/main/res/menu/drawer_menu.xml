@@ -11,11 +11,7 @@
         android:title="Criar Ong"
         />
 
-    <item
-        android:id="@+id/registerPhoto"
-        android:icon="@drawable/add_photo_icon_24"
-        android:title="Registrar Foto de Usuário"
-        />
+
 
     <item
         android:id="@+id/logOut"

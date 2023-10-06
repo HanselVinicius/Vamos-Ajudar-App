@@ -3,7 +3,6 @@ package br.got.vamosajudar.view_model;
 
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -16,7 +15,7 @@ import br.got.vamosajudar.infra.observer.Publisher;
 import br.got.vamosajudar.infra.observer.Subscriber;
 import br.got.vamosajudar.model.user.UserRepository;
 import br.got.vamosajudar.model.user.dto.LoginDTO;
-import br.got.vamosajudar.model.user.dto.ProfileDTO;
+import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
 import br.got.vamosajudar.model.user.dto.UserRegisterDTO;
 import br.got.vamosajudar.model.user.token.UserCallback;
 import dagger.hilt.android.lifecycle.HiltViewModel;
@@ -30,38 +29,26 @@ public class LoginActivityViewModel extends ViewModel implements UserCallback {
     private final UserRepository repository;
 
 
+
     @Inject
     public LoginActivityViewModel(UserRepository repository){
         this.repository = repository;
     }
 
 
-    public void executeLogin(String username, String password, Subscriber sub){
+    public void executeLogin(String username, String password, Subscriber sub, MutableLiveData<LoginResponseDTO> loginResponseLiveData){
         try {
             if (username.isBlank() || password.isBlank()) {
                 throw new DadosInvalidosException("DADOS INVALIDOS OU NÃO INSERIDOS");
             }
             userPublisher.subscribe(sub);
-            this.repository.login(new LoginDTO(username, password),this);
-
+            this.repository.login(new LoginDTO(username, password),this, loginResponseLiveData);
         }catch (LoginException  ex){
             this.onTokenError(ex);
             Log.e(TAG, "executeLogin: ERRO NO LOGIN" ,ex );
         }
     }
 
-    public void executeGetProfile(String token,MutableLiveData<String> profileDTOMutableLiveData){
-        try {
-            if (token.isBlank()) {
-                throw new DadosInvalidosException("DADOS INVALIDOS OU NÃO INSERIDOS");
-            }
-            this.repository.getProfile(this,token,profileDTOMutableLiveData);
-
-        }catch (Exception ex){
-            Log.e(TAG, "executeGetProfile: ERRO NO GET DO PROFILE",ex );
-            this.onTokenError(ex);
-        }
-    }
 
 
     public void executeRegister(String login,String email,String password,String name,Subscriber sub){
