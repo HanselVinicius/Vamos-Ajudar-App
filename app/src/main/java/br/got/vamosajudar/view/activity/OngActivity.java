@@ -17,6 +17,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -108,7 +109,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
     }
 
 
-    ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 int resultCode = result.getResultCode();
@@ -127,7 +128,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
         navigationView.setVisibility(View.VISIBLE);
         ImageView headerImage = headerView.findViewById(R.id.profile_image);
         TextView headerUsrName = headerView.findViewById(R.id.header_usr_name);
-        new NavHeaderMenuCreator(navigationView,this).initializeItems(user);
+        new NavHeaderMenuCreator(navigationView,this,launcher).initializeItems(user);
         headerUsrName.setText(user.getLogin());
         this.user_icon.setOnClickListener(
                 v->{}
@@ -171,11 +172,6 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
         toggle.syncState();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        return false;
-    }
 
     private RecyclerView.OnScrollListener onScroll(){
       return  new RecyclerView.OnScrollListener() {
@@ -211,4 +207,10 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
     }
 
 
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }
 }

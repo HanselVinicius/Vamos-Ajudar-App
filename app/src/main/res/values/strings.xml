@@ -28,4 +28,5 @@
     <string name="confirmar">Confirmar</string>
     <string name="nav_open">Abrir</string>
     <string name="nav_close">Fechar</string>
+    <string name="dado_invalido">DADO INVÁLIDO</string>
 </resources>

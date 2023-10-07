@@ -175,6 +175,13 @@
                 android:padding="8dp" />
 
 
+            <ImageView
+                android:id="@+id/add_photo_register_ong"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/add_photo_icon_24"
+                android:layout_gravity="center"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -208,6 +215,8 @@
                     android:textSize="16sp" />
 
             </LinearLayout>
+
+
 
 
 
