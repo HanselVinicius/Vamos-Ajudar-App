@@ -1,7 +1,10 @@
 package br.got.vamosajudar.view.activity;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import br.got.vamosajudar.R;
@@ -12,7 +15,9 @@ import android.os.Bundle;
 import br.got.vamosajudar.databinding.ActivityOngRegisterBinding;
 import br.got.vamosajudar.infra.validator.Validator;
 import br.got.vamosajudar.infra.validator.validators.NotEmptyValidation;
+import br.got.vamosajudar.view.components.ImagePicker;
 
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,7 +53,10 @@ public class OngRegisterActivity extends AppCompatActivity {
 
     private ImageView imagePicker;
 
-    private String imageBase64;
+    private Uri imageBase64;
+
+    public static final int PICK_IMAGE_REQUEST = 69;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +99,7 @@ public class OngRegisterActivity extends AppCompatActivity {
         //buttons
         confirmCreationButton = binding.confirmCreationBtn;
         cancelCreationButton = binding.cancelCreationBtn;
+        imagePicker = binding.addPhotoRegisterOng;
     }
 
 
@@ -105,6 +114,11 @@ public class OngRegisterActivity extends AppCompatActivity {
                 isValid = false;
             }
         }
+            if (this.imageBase64 == null){
+                isValid = false;
+            }
+
+
             if (isValid){
                 //monta dto coloca na intent e faz o finish ja fazendo a requisicao na tela de ongs
             }
@@ -116,13 +130,19 @@ public class OngRegisterActivity extends AppCompatActivity {
         });
 
         imagePicker.setOnClickListener(view -> {
-            
+            new ImagePicker(this).openGallery();
         });
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null ){
+            this.imageBase64 = data.getData();
+        }
+    }
 }
 
 
