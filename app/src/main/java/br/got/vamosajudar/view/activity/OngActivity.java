@@ -1,5 +1,6 @@
 package br.got.vamosajudar.view.activity;
 
+import static br.got.vamosajudar.view.activity.LoginActivity.REQUST_CODE_LOGIN_VALUE;
 import static br.got.vamosajudar.view.activity.LoginActivity.USER;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -17,7 +18,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,6 +75,9 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
 
     private View headerView;
 
+    public static final String REQUEST_CODE = "REQUEST_CODE";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,8 +119,14 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
                 Intent data = result.getData();
 
                 if (resultCode == RESULT_OK && data != null) {
-                     this.user = (LoginResponseDTO) data.getSerializableExtra(USER);
-                     updateInterfaceOnToken(user);
+                    int requestCode = data.getIntExtra(REQUEST_CODE,-1);
+                    switch (requestCode){
+                        case REQUST_CODE_LOGIN_VALUE -> {
+                            this.user = (LoginResponseDTO) data.getSerializableExtra(USER);
+                            updateInterfaceOnToken(user);
+                        }
+                    }
+
                 }
             }
     );

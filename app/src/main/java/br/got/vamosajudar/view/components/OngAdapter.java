@@ -32,6 +32,7 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
 
 
 
+
     public OngAdapter(List<Ong> ongList, Context context) {
         this.ongList = ongList;
         this.context = context;
@@ -49,7 +50,7 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
             Ong ong = ongList.get(position);
             holder.ongTitle.setText(ong.getName());
             Picasso.get()
-                    .load(ong.getImage())
+                    .load(ong.getImageLink())
                     .into(holder.ongImageView);
             holder.ongDescription.setText(ong.getDescription());
 

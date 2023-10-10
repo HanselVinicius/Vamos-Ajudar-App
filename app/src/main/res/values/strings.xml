@@ -29,4 +29,6 @@
     <string name="nav_open">Abrir</string>
     <string name="nav_close">Fechar</string>
     <string name="dado_invalido">DADO INVÁLIDO</string>
+    <string name="pix">PIX:</string>
+    <string name="email_telefone_chave_aleatoria">email, telefone, chave aleatoria, cpf</string>
 </resources>

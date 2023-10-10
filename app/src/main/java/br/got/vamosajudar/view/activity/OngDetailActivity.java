@@ -68,7 +68,7 @@ public class OngDetailActivity extends AppCompatActivity {
 
     private void initializeFields(){
         Picasso.get()
-                .load(ong.getImage())
+                .load(ong.getImageLink())
                 .into(binding.imageView);
         binding.nameId.setText( ong.getName());
         binding.descricaoId.setText(ong.getDescription());

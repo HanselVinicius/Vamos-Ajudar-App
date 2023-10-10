@@ -1,5 +1,7 @@
 package br.got.vamosajudar.view.activity;
 
+import static br.got.vamosajudar.view.activity.OngActivity.REQUEST_CODE;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,17 +12,12 @@ import android.os.Bundle;
 import br.got.vamosajudar.R;
 import br.got.vamosajudar.databinding.ActivityOngRegisterBinding;
 
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import br.got.vamosajudar.databinding.ActivityOngRegisterBinding;
 import br.got.vamosajudar.infra.validator.Validator;
 import br.got.vamosajudar.infra.validator.validators.NotEmptyValidation;
 import br.got.vamosajudar.view.components.ImagePicker;
 
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Button;
 
 import java.util.HashMap;
@@ -55,7 +52,12 @@ public class OngRegisterActivity extends AppCompatActivity {
 
     private Uri imageBase64;
 
+    private EditText pixEditText;
+
     public static final int PICK_IMAGE_REQUEST = 69;
+
+    public static final int REQUEST_CODE_REGISTER_ONG = 20;
+
 
 
     @Override
@@ -79,6 +81,7 @@ public class OngRegisterActivity extends AppCompatActivity {
         validatorHashMap.put(phoneEditText,new NotEmptyValidation());
         validatorHashMap.put(websiteEditText,new NotEmptyValidation());
         validatorHashMap.put(ongNumberAddressEditText,new NotEmptyValidation());
+        validatorHashMap.put(pixEditText,new NotEmptyValidation());
     }
 
 
@@ -95,6 +98,7 @@ public class OngRegisterActivity extends AppCompatActivity {
         emailEditText = binding.emailId;
         phoneEditText = binding.phoneId;
         websiteEditText = binding.websiteId;
+        pixEditText = binding.pixId;
 
         //buttons
         confirmCreationButton = binding.confirmCreationBtn;
@@ -110,7 +114,7 @@ public class OngRegisterActivity extends AppCompatActivity {
             boolean isValid = true;
             for (Map.Entry<EditText, Validator> entry : validatorHashMap.entrySet()) {
             if (!entry.getValue().validate(entry.getKey())){
-                entry.getKey().setText(R.string.dado_invalido);
+                entry.getKey().setError("DADO INVÁLIDO");
                 isValid = false;
             }
         }
@@ -120,6 +124,9 @@ public class OngRegisterActivity extends AppCompatActivity {
 
 
             if (isValid){
+                var intent = new Intent(OngRegisterActivity.this,OngActivity.class);
+                intent.putExtra(REQUEST_CODE,REQUEST_CODE_REGISTER_ONG);
+
                 //monta dto coloca na intent e faz o finish ja fazendo a requisicao na tela de ongs
             }
 

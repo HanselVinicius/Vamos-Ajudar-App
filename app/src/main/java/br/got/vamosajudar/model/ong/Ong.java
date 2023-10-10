@@ -15,6 +15,10 @@ public class Ong implements Serializable {
 
     private String image;
 
+    private String chavePix;
+
+    private final static String LINK_API_IMAGE = "https://vamos-ajudar-api.henriquebarucco.com.br/v1/image/";
+
 
     public String getId() {
         return id;
@@ -30,6 +34,13 @@ public class Ong implements Serializable {
 
     public String getImage() {
         return image;
+    }
+
+    /**
+     * mudança pedida pelo henrique barucco no dia  09/10 para salvar imagem de cada ong
+     */
+    public String getImageLink(){
+        return LINK_API_IMAGE +this.getImage();
     }
 
     public Boolean getVerified() {
@@ -50,6 +61,10 @@ public class Ong implements Serializable {
 
     public Boolean getActive() {
         return active;
+    }
+
+    public String getChavePix() {
+        return chavePix;
     }
 
     @Override

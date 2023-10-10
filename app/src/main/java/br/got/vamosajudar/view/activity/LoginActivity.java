@@ -1,5 +1,7 @@
 package br.got.vamosajudar.view.activity;
 
+import static br.got.vamosajudar.view.activity.OngActivity.REQUEST_CODE;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,7 +20,6 @@ import br.got.vamosajudar.databinding.ActivityLoginBinding;
 import br.got.vamosajudar.infra.exceptions.DadosInvalidosException;
 import br.got.vamosajudar.infra.observer.Subscriber;
 import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
-import br.got.vamosajudar.model.user.token.TokenManager;
 import br.got.vamosajudar.utils.Utils;
 import br.got.vamosajudar.view_model.LoginActivityViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
@@ -27,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class LoginActivity extends AppCompatActivity implements Subscriber {
 
     public static final String PROFILE = "PROFILE";
+    public static final int REQUST_CODE_LOGIN_VALUE = 10;
     public LoginActivityViewModel viewModel;
     private Button btn_login;
     private Button btn_register;
@@ -123,6 +125,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
                 if (loginResponseDTO != null){
                     var it = new Intent(LoginActivity.this,OngActivity.class);
                     it.putExtra(USER,loginResponseDTO);
+                    it.putExtra(REQUEST_CODE,REQUST_CODE_LOGIN_VALUE);
                     setResult(RESULT_OK,it);
                     finish();
                 }
