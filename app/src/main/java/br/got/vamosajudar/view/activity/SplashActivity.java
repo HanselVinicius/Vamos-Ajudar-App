@@ -20,6 +20,8 @@ public class SplashActivity  extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         new Handler().postDelayed(() -> {
             Intent mainIntent = new Intent(SplashActivity.this, OngActivity.class);
+            //posteriormente quero fazer algo pra pegar o token (sharedPreferences) que ja possui implementado
+            // e mandar para atividade principal (OngActivity)
             startActivity(mainIntent);
 
             finish();

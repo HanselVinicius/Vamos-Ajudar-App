@@ -31,4 +31,15 @@
     <string name="dado_invalido">DADO INVÁLIDO</string>
     <string name="pix">PIX:</string>
     <string name="email_telefone_chave_aleatoria">email, telefone, chave aleatoria, cpf</string>
+    <string name="rua_str">Rua</string>
+    <string name="num_str">Número</string>
+    <string name="postal_code_str">CEP</string>
+    <string name="state_str">Estado</string>
+    <string name="contact_str">Contato:</string>
+    <string name="email_str">Email</string>
+    <string name="phone_number_str">(16) 12345-6789</string>
+    <string name="website_str">www.vamosajudar.com.br</string>
+    <string name="cidade">Cidade</string>
+    <string name="pais_str">País</string>
+    <string name="btn_adcionar_imagem">botão de adcionar imagem</string>
 </resources>

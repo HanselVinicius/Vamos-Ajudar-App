@@ -2,6 +2,8 @@ package br.got.vamosajudar.utils;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.Uri;
@@ -46,16 +48,45 @@ public class Utils {
                 byte[] imageBytes = byteArrayOutputStream.toByteArray();
                 inputStream.close();
 
-                // Encode the imageBytes to Base64
-                String base64String = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+                String base64String = Base64.encodeToString(imageBytes, Base64.NO_PADDING);
+
+                base64String = base64String.replaceAll("\\s", "");
+
                 return base64String;
             }
         } catch (IOException e) {
-            Log.e(TAG, "uriToBase64: ",e);
+            Log.e(TAG, "uriToBase64: ", e);
             e.printStackTrace();
         }
 
         return null;
     }
+
+    public static String compressImageToBase64(Context context, Uri imageUri) {
+        try {
+            ContentResolver contentResolver =  context.getContentResolver();
+            InputStream inputStream = contentResolver.openInputStream(imageUri);
+
+            if (inputStream != null) {
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+
+                byte[] imageBytes = byteArrayOutputStream.toByteArray();
+                String base64String = Base64.encodeToString(imageBytes, Base64.NO_PADDING);
+
+                // Remover quebras de linha e espaços em branco
+                base64String = base64String.replaceAll("\\s", "");
+
+                return base64String;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
 
 }

@@ -10,6 +10,14 @@ public class Address implements Serializable {
     private String postalCode;
     private String country;
 
+    public Address(String street, String number, String city, String state, String postalCode, String country) {
+        this.street = street;
+        this.number = number;
+        this.city = city;
+        this.state = state;
+        this.postalCode = postalCode;
+        this.country = country;
+    }
 
     public String getStreet() {
         return street;

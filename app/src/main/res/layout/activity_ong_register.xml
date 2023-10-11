@@ -5,7 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.OngRegisterActivity">
+    tools:context=".view.activity.OngRegisterActivity"
+    android:id="@+id/ong_register_activity"
+    >
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -93,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:autofillHints="postalAddress"
-                    android:hint="Rua"
+                    android:hint="@string/rua_str"
                     android:padding="8dp" />
 
                 <EditText
@@ -102,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:autofillHints="postalAddress"
-                    android:hint="Número"
+                    android:hint="@string/num_str"
                     android:inputType="number"
                     android:padding="8dp" />
 
@@ -112,9 +114,11 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:autofillHints="postalCode"
-                    android:hint="CEP"
+                    android:hint="@string/postal_code_str"
                     android:inputType="number"
                     android:padding="8dp" />
+
+
 
                 <EditText
                     android:id="@+id/estado"
@@ -122,12 +126,32 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:autofillHints="postalAddress"
-                    android:hint="Estado"
+                    android:hint="@string/state_str"
                     android:inputType="textPostalAddress"
                     android:padding="8dp" />
 
             </LinearLayout>
 
+
+            <EditText
+                android:id="@+id/cidade_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints="name"
+                android:hint="@string/cidade"
+                android:inputType="text"
+                android:padding="8dp" />
+
+            <EditText
+                android:id="@+id/pais_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints="name"
+                android:hint="@string/pais_str"
+                android:inputType="text"
+                android:padding="8dp" />
 
 
 
@@ -135,7 +159,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Contato:"
+                android:text="@string/contact_str"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -146,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints="emailAddress"
-                android:hint="Email"
+                android:hint="@string/email_str"
                 android:inputType="textWebEmailAddress"
                 android:padding="8dp" />
 
@@ -158,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints="phone"
-                android:hint="(16)99999-9999"
+                android:hint="@string/phone_number_str"
                 android:inputType="phone"
                 android:padding="8dp" />
 
@@ -170,8 +194,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autofillHints="name"
-                android:hint="www.vamosajudar.com.br"
-                android:inputType="phone"
+                android:hint="@string/website_str"
+                android:inputType="textUri"
                 android:padding="8dp" />
 
             <TextView
@@ -190,7 +214,7 @@
                 android:layout_weight="1"
                 android:autofillHints="name"
                 android:hint="@string/email_telefone_chave_aleatoria"
-                android:inputType="phone"
+                android:inputType="textUri"
                 android:padding="8dp" />
 
 
@@ -219,7 +243,8 @@
                     android:text="@string/confirmar"
                     android:textColor="@color/design_default_color_on_primary"
                     android:backgroundTint="@color/secundary_green"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    style="?android:attr/buttonBarButtonStyle" />
 
                 <Button
                     android:id="@+id/cancel_creation_btn"

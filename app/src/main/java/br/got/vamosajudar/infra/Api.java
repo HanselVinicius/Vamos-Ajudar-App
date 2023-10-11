@@ -1,5 +1,6 @@
 package br.got.vamosajudar.infra;
 
+import br.got.vamosajudar.model.ong.OngRegisterDTO;
 import br.got.vamosajudar.model.ong.OngResponse;
 import br.got.vamosajudar.model.ong.Ong;
 import br.got.vamosajudar.model.ong.qr.QRDto;
@@ -23,8 +24,8 @@ public interface Api {
     @GET("/v1/ong")
     Call<OngResponse<Ong>> getOngs(@Query("page") int page);
 
-    @POST
-    Call<ResponseBody> registerOngs(@Body Ong ong);
+    @POST("/v1/ong")
+    Call<Ong> registerOngs(@Header("Authorization") String Bearer, @Body OngRegisterDTO ong);
 
 
     @POST("v1/auth/login")

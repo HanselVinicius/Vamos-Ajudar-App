@@ -31,8 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_register_user"
-        android:textColorHint="#888888"
-        android:textColor="#000000"
+
         />
 
     <EditText
@@ -48,8 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_text_name_user_register"
-        android:textColorHint="#888888"
-        android:textColor="#000000"
+
         />
 
     <EditText
@@ -65,8 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_txt_email_user"
-        android:textColorHint="#888888"
-        android:textColor="#000000"
+
         />
 
     <EditText
@@ -82,14 +79,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_txt_password_register"
-        android:textColorHint="#888888"
-        android:textColor="#000000"
+
         />
+
+
+    <ImageView
+        android:id="@+id/pick_image_register_user"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/add_photo_icon_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_txt_username"
+        app:layout_constraintVertical_bias="0.254"
+        android:contentDescription="@string/btn_adcionar_imagem" />
 
     <Button
         android:id="@+id/btn_register_user"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="102dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/secundary_green"
         android:text="@string/registrar_login"
@@ -104,6 +115,7 @@
         android:id="@+id/btn_cancel_user"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="102dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/secundary_green"
         android:text="@string/cancelar_login"
@@ -113,5 +125,7 @@
         app:layout_constraintStart_toEndOf="@+id/btn_register_user"
         app:layout_constraintTop_toBottomOf="@+id/edt_txt_username"
         app:layout_constraintWidth_percent="0.42" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

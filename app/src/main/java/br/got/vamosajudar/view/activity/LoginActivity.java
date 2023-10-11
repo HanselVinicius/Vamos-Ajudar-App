@@ -1,17 +1,21 @@
 package br.got.vamosajudar.view.activity;
 
 import static br.got.vamosajudar.view.activity.OngActivity.REQUEST_CODE;
+import static br.got.vamosajudar.view.activity.OngRegisterActivity.PICK_IMAGE_REQUEST;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -21,6 +25,7 @@ import br.got.vamosajudar.infra.exceptions.DadosInvalidosException;
 import br.got.vamosajudar.infra.observer.Subscriber;
 import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
 import br.got.vamosajudar.utils.Utils;
+import br.got.vamosajudar.view.components.ImagePicker;
 import br.got.vamosajudar.view_model.LoginActivityViewModel;
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -41,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
 
     private MutableLiveData<LoginResponseDTO> loginResponseLiveData;
 
+    private Uri imageBase64 = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +89,8 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
             EditText txtEmail = dialog.findViewById(R.id.edt_txt_email_user);
             EditText txtUsername = dialog.findViewById(R.id.edt_txt_username);
             EditText txtPassword = dialog.findViewById(R.id.edit_txt_password_register);
+            ImageView imagePicker = dialog.findViewById(R.id.pick_image_register_user);
+            imagePicker.setOnClickListener(l-> new ImagePicker(this).openGallery());
 
             btnCancel.setOnClickListener(l -> dialog.cancel());
 
@@ -93,6 +101,7 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
                             txtEmail.getText().toString(),
                             txtPassword.getText().toString(),
                             txtName.getText().toString(),
+                            Utils.compressImageToBase64(this, this.imageBase64),
                             this);
                 }else {
                     Snackbar.make(binding.loginScreen,"POR FAVOR CONECTE-SE A INTERNET",Snackbar.LENGTH_LONG).show();
@@ -106,6 +115,13 @@ public class LoginActivity extends AppCompatActivity implements Subscriber {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null ){
+            this.imageBase64 = data.getData();
+        }
+    }
 
     private void initializeFields(){
         this.btn_login = binding.buttonLogin;

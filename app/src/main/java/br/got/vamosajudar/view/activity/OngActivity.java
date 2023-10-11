@@ -2,6 +2,7 @@ package br.got.vamosajudar.view.activity;
 
 import static br.got.vamosajudar.view.activity.LoginActivity.REQUST_CODE_LOGIN_VALUE;
 import static br.got.vamosajudar.view.activity.LoginActivity.USER;
+import static br.got.vamosajudar.view.activity.OngRegisterActivity.REQUEST_CODE_REGISTER_ONG;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -18,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,7 @@ import java.util.stream.Collectors;
 import br.got.vamosajudar.R;
 import br.got.vamosajudar.databinding.ActivityOngBinding;
 import br.got.vamosajudar.model.ong.Ong;
+import br.got.vamosajudar.model.ong.OngRegisterDTO;
 import br.got.vamosajudar.model.ong.OngResponse;
 import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
 import br.got.vamosajudar.view.components.NavHeaderMenuCreator;
@@ -125,6 +129,10 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
                             this.user = (LoginResponseDTO) data.getSerializableExtra(USER);
                             updateInterfaceOnToken(user);
                         }
+                        case REQUEST_CODE_REGISTER_ONG -> {
+                            viewModel.registerOngs(user.getToken(), (OngRegisterDTO) data.getSerializableExtra(OngRegisterActivity.CREATED_ONG));
+                            swipeAction();
+                        }
                     }
 
                 }
@@ -142,6 +150,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
         this.user_icon.setOnClickListener(
                 v->{}
         );
+        this.user_icon.setVisibility(View.GONE);
     }
 
     @Override
@@ -209,6 +218,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
 
 
     private void swipeAction(){
+        //todo não dar um clear na tela e sim atualizar os dados mantendo os antigos e adicionando os novos, obs: provavelmente um set resolveria
         this.ongList.clear();
         this.recyclerView.getAdapter().notifyDataSetChanged();
         this.currentPage = 0;

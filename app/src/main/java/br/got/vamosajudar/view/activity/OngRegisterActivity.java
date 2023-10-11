@@ -9,16 +9,22 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
-import br.got.vamosajudar.R;
 import br.got.vamosajudar.databinding.ActivityOngRegisterBinding;
 
 import br.got.vamosajudar.infra.validator.Validator;
+import br.got.vamosajudar.infra.validator.validators.MaxCharsValidation;
 import br.got.vamosajudar.infra.validator.validators.NotEmptyValidation;
+import br.got.vamosajudar.model.ong.Address;
+import br.got.vamosajudar.model.ong.Contact;
+import br.got.vamosajudar.model.ong.OngRegisterDTO;
+import br.got.vamosajudar.utils.Utils;
 import br.got.vamosajudar.view.components.ImagePicker;
 
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Button;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +40,11 @@ public class OngRegisterActivity extends AppCompatActivity {
 
     private EditText postalCodeEditText;
 
+    private EditText countryEditText;
+
     private EditText estadoEditText;
+
+    private EditText cityEditText;
 
     private EditText emailEditText;
 
@@ -58,6 +68,7 @@ public class OngRegisterActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_REGISTER_ONG = 20;
 
+    public static final String CREATED_ONG = "CREATED_ONG";
 
 
     @Override
@@ -71,17 +82,21 @@ public class OngRegisterActivity extends AppCompatActivity {
 
     private void initValidatonMap(){
         this.validatorHashMap = new HashMap<>();
-        validatorHashMap.put(ongNameEditText,new NotEmptyValidation());
-        validatorHashMap.put(ongDescriptionEditText,new NotEmptyValidation());
-        validatorHashMap.put(ongGoalEditText,new NotEmptyValidation());
-        validatorHashMap.put(ongStreetEditText,new NotEmptyValidation());
-        validatorHashMap.put(postalCodeEditText,new NotEmptyValidation());
-        validatorHashMap.put(estadoEditText,new NotEmptyValidation());
-        validatorHashMap.put(emailEditText,new NotEmptyValidation());
-        validatorHashMap.put(phoneEditText,new NotEmptyValidation());
-        validatorHashMap.put(websiteEditText,new NotEmptyValidation());
-        validatorHashMap.put(ongNumberAddressEditText,new NotEmptyValidation());
-        validatorHashMap.put(pixEditText,new NotEmptyValidation());
+        NotEmptyValidation notEmptyValidation = new NotEmptyValidation();
+        validatorHashMap.put(ongNameEditText, notEmptyValidation);
+        validatorHashMap.put(ongDescriptionEditText, notEmptyValidation);
+        validatorHashMap.put(ongGoalEditText, notEmptyValidation);
+        validatorHashMap.put(ongStreetEditText, notEmptyValidation);
+        validatorHashMap.put(postalCodeEditText, notEmptyValidation);
+        validatorHashMap.put(estadoEditText, notEmptyValidation);
+        validatorHashMap.put(emailEditText, notEmptyValidation);
+        validatorHashMap.put(phoneEditText, notEmptyValidation);
+        validatorHashMap.put(websiteEditText, notEmptyValidation);
+        validatorHashMap.put(ongNumberAddressEditText, notEmptyValidation);
+        validatorHashMap.put(pixEditText, notEmptyValidation);
+        validatorHashMap.put(cityEditText, notEmptyValidation);
+        validatorHashMap.put(countryEditText, notEmptyValidation);
+        validatorHashMap.put(estadoEditText,new MaxCharsValidation(2));
     }
 
 
@@ -99,6 +114,8 @@ public class OngRegisterActivity extends AppCompatActivity {
         phoneEditText = binding.phoneId;
         websiteEditText = binding.websiteId;
         pixEditText = binding.pixId;
+        cityEditText = binding.cidadeId;
+        countryEditText = binding.paisId;
 
         //buttons
         confirmCreationButton = binding.confirmCreationBtn;
@@ -118,30 +135,51 @@ public class OngRegisterActivity extends AppCompatActivity {
                 isValid = false;
             }
         }
-            if (this.imageBase64 == null){
+            if(!Utils.isNetworkConnected(this)){
                 isValid = false;
+                Snackbar.make(binding.ongRegisterActivity,"POR FAVOR CONECTE-SE A INTERNET",Snackbar.LENGTH_LONG).show();
             }
 
-
+            if (this.imageBase64 == null){
+                isValid = false;
+                Snackbar.make(binding.ongRegisterActivity,"POR FAVOR INSIRA UMA IMAGEM",Snackbar.LENGTH_LONG).show();
+            }
             if (isValid){
                 var intent = new Intent(OngRegisterActivity.this,OngActivity.class);
                 intent.putExtra(REQUEST_CODE,REQUEST_CODE_REGISTER_ONG);
-
-                //monta dto coloca na intent e faz o finish ja fazendo a requisicao na tela de ongs
+                intent.putExtra(CREATED_ONG, getOnRegistered());
+                setResult(RESULT_OK,intent);
+                finish();
             }
-
         });
-
-        cancelCreationButton.setOnClickListener(view -> {
-            finish();
-        });
-
-        imagePicker.setOnClickListener(view -> {
-            new ImagePicker(this).openGallery();
-        });
-
+        cancelCreationButton.setOnClickListener(view -> finish());
+        imagePicker.setOnClickListener(view -> new ImagePicker(this).openGallery());
     }
 
+    private OngRegisterDTO getOnRegistered() {
+        return new OngRegisterDTO(this.ongNameEditText.getText().toString(),
+                this.ongDescriptionEditText.getText().toString(),
+                this.ongGoalEditText.getText().toString(),
+                this.getAddress(),
+                this.getContact(),
+                Utils.uriToBase64(this,this.imageBase64),
+                this.pixEditText.getText().toString());
+    }
+
+    private Address getAddress(){
+        return new Address(this.ongStreetEditText.getText().toString(),
+                this.ongNumberAddressEditText.getText().toString(),
+                this.cityEditText.getText().toString(),
+                this.estadoEditText.getText().toString(),
+                this.postalCodeEditText.getText().toString(),
+                this.countryEditText.getText().toString());
+    }
+
+    private Contact getContact(){
+        return new Contact(this.emailEditText.getText().toString(),
+                this.phoneEditText.getText().toString(),
+                this.websiteEditText.getText().toString());
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

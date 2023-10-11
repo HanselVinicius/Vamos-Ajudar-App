@@ -8,6 +8,12 @@ public class Contact implements Serializable {
     private String website;
 
 
+    public Contact(String email, String phone, String website) {
+        this.email = email;
+        this.phone = phone;
+        this.website = website;
+    }
+
     public String getEmail() {
         return email;
     }

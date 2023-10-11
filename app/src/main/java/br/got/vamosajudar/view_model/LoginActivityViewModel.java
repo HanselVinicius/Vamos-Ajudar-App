@@ -51,12 +51,12 @@ public class LoginActivityViewModel extends ViewModel implements UserCallback {
 
 
 
-    public void executeRegister(String login,String email,String password,String name,Subscriber sub){
-            if (login.isBlank() || email.isBlank() || password.isBlank() || name.isBlank()){
+    public void executeRegister(String login,String email,String password,String name,String image,Subscriber sub){
+            if (login.isBlank() || email.isBlank() || password.isBlank() || name.isBlank() || image.isBlank()){
                 throw new DadosInvalidosException("DADOS INVALIDOS OU NÃO INSERIDOS");
             }
             userPublisher.subscribe(sub);
-            this.repository.register(new UserRegisterDTO(login,email,password,name),this);
+            this.repository.register(new UserRegisterDTO(login,email,password,name, image),this);
     }
 
 

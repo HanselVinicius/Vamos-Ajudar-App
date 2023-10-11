@@ -21,4 +21,17 @@ public class OngRegisterDTO implements Serializable {
         this.image = image;
         this.pix = pix;
     }
+
+    @Override
+    public String toString() {
+        return "OngRegisterDTO{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", goal='" + goal + '\'' +
+                ", address=" + address +
+                ", contact=" + contact +
+                ", image='" + image + '\'' +
+                ", pix='" + pix + '\'' +
+                '}';
+    }
 }

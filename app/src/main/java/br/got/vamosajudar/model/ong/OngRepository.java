@@ -52,6 +52,30 @@ public class OngRepository implements Repository {
     }
 
 
+    public void performRegisterOngs(String token,OngRegisterDTO ongRegisterDTO){
+
+        Call<Ong> call = this.api.registerOngs("Bearer "+token,ongRegisterDTO);
+        call.enqueue(
+                //todo melhorar os tratamentos de erros e etc
+                new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Ong> call, Response<Ong> response) {
+                        if (response.isSuccessful()) {
+                            Log.d(TAG, "onResponse: ONG REGISTRADA COM SUCESSO");
+                        } else {
+                            Log.e(TAG, "onFailure: ERRO NA REQUISICAO DE ONG: " + response.raw());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Ong> call, Throwable t) {
+                        //todo tratar erro
+                    }
+                }
+        );
+    }
+
+
     public MutableLiveData<OngResponse<Ong>> getListOfOngs() {
         return ongList;
     }
