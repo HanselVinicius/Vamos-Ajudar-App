@@ -1,7 +1,9 @@
 package br.got.vamosajudar.utils;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
@@ -86,6 +88,15 @@ public class Utils {
         }
 
         return null;
+    }
+
+    public static void alertDialog(Context context, DialogInterface.OnClickListener onClickListener){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("DELETAR ONG");
+        builder.setMessage("Tem certeza que deseja deletar essa ONG?");
+        builder.setPositiveButton("SIM",onClickListener);
+        builder.setNegativeButton("NÃO", (dialogInterface, i) -> dialogInterface.cancel());
+        builder.show();
     }
 
 

@@ -4,8 +4,6 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import br.got.vamosajudar.infra.Api;
@@ -21,7 +19,7 @@ public class OngRepository implements Repository {
     private final Api api;
 
 
-    private static final MutableLiveData<OngResponse<Ong>>  ongList = new MutableLiveData<>();
+    private static final MutableLiveData<OngResponseList<Ong>>  ongList = new MutableLiveData<>();
 
 
     @Inject
@@ -30,11 +28,11 @@ public class OngRepository implements Repository {
     }
 
     public void performGetAllOngs(int page){
-        Call<OngResponse<Ong>> call = this.api.getOngs(page);
+        Call<OngResponseList<Ong>> call = this.api.getOngs(page);
         call.enqueue(
                 new Callback<>() {
                     @Override
-                    public void onResponse(Call<OngResponse<Ong>> call, Response<OngResponse<Ong>> response) {
+                    public void onResponse(Call<OngResponseList<Ong>> call, Response<OngResponseList<Ong>> response) {
 
                         if (response.isSuccessful()){
                             ongList.postValue(response.body());
@@ -44,7 +42,7 @@ public class OngRepository implements Repository {
                     }
 
                     @Override
-                    public void onFailure(Call<OngResponse<Ong>> call, Throwable t) {
+                    public void onFailure(Call<OngResponseList<Ong>> call, Throwable t) {
                         Log.e(TAG, "onFailure: ERRO NA REQUISICAO DE ONG: ",t );
                     }
                 }
@@ -76,8 +74,30 @@ public class OngRepository implements Repository {
     }
 
 
-    public MutableLiveData<OngResponse<Ong>> getListOfOngs() {
+    public MutableLiveData<OngResponseList<Ong>> getListOfOngs() {
         return ongList;
     }
 
+    public void performDeleteOng(String token) {
+        //todo melhorar os tratamentos de erros e etc
+
+        Call<Void> call = this.api.deleteOng("Bearer "+token);
+        call.enqueue(
+                new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()){
+                            Log.d(TAG, "onResponse: ONG DELETADA COM SUCESSO");
+                        }else {
+                            Log.e(TAG, "onFailure: ERRO NA REQUISICAO DE ONG: " +response.raw() );
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        //todo tratar erro
+                    }
+                }
+        );
+    }
 }

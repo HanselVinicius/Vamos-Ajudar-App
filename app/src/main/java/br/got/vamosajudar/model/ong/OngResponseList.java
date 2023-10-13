@@ -2,7 +2,7 @@ package br.got.vamosajudar.model.ong;
 
 import java.util.List;
 
-public class OngResponse<T> {
+public class OngResponseList<T> {
 
     private List<T> content;
     private boolean last;

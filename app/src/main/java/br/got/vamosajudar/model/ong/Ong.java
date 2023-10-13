@@ -12,12 +12,22 @@ public class Ong implements Serializable {
     private Contact contact;
     private Boolean verified;
     private Boolean active;
-
     private String image;
-
     private String chavePix;
 
-    private final static String LINK_API_IMAGE = "https://vamos-ajudar-api.henriquebarucco.com.br/v1/image/";
+    public final static String LINK_API_IMAGE = "https://vamos-ajudar-api.henriquebarucco.com.br/v1/image/";
+
+    //importante deixar claro que esse construtor deixa os atributos verified e active vazios pois ele provem dados para a DetailActivity
+    public Ong(OngResponseDto dto){
+        this.id = dto.getId();
+        this.name = dto.getName();
+        this.description = dto.getDescription();
+        this.goal = dto.getGoal();
+        this.address = dto.getAddress();
+        this.contact = dto.getContact();
+        this.image = dto.getImage();
+        this.chavePix = dto.getChavePix();
+    }
 
 
     public String getId() {

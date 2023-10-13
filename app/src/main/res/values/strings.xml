@@ -42,4 +42,5 @@
     <string name="cidade">Cidade</string>
     <string name="pais_str">País</string>
     <string name="btn_adcionar_imagem">botão de adcionar imagem</string>
+    <string name="deletar_ong">DELETAR ONG</string>
 </resources>

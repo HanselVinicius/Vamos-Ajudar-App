@@ -72,7 +72,6 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
             context.startActivity(it);
 
         });
-
     }
 
     @Override

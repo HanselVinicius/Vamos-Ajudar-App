@@ -1,20 +1,25 @@
 package br.got.vamosajudar.view.activity;
 
+import static br.got.vamosajudar.view.activity.OngActivity.REQUEST_CODE;
 import static br.got.vamosajudar.view.components.OngAdapter.ONG;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,7 +52,15 @@ public class OngDetailActivity extends AppCompatActivity {
 
     private final static String TAG = "ONGDETAILACT";
 
+    public static final String IS_FROM_USER = "IS_FROM_USER";
+
+    public static final int DELETE_ONG = 30;
+
     private Ong ong;
+
+    private boolean isFromUser;
+
+    private Button donateButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +70,11 @@ public class OngDetailActivity extends AppCompatActivity {
         this.detailActivityViewModel = new ViewModelProvider(this).get(DetailActivityViewModel.class);
         var it = getIntent();
         ong = (Ong) it.getSerializableExtra(ONG);
+        isFromUser = it.getBooleanExtra(IS_FROM_USER,false);
         initializeFields();
-        if (Utils.isNetworkConnected(this)) {
+        if (Utils.isNetworkConnected(this) && !isFromUser) {
             getQrAndBrCode();
-        }else {
+        }else if(!Utils.isNetworkConnected(this)) {
             Snackbar.make(binding.detailScreen, "POR FAVOR CONECTE-SE A INTERNET",Snackbar.LENGTH_SHORT).show();
         }
     }
@@ -79,14 +93,32 @@ public class OngDetailActivity extends AppCompatActivity {
         binding.emailId.setText(ong.getContact().getEmail());
         binding.telefoneId.setText(ong.getContact().getPhone());
         binding.siteId.setText(ong.getContact().getWebsite());
+        donateButton = binding.donateButtonId;
+        onClicks();
+    }
 
-
-        binding.donateButtonId.setOnClickListener(v->{
-            if (this.qrCode != null|| this.brCode != null) {
+    private void onClicks() {
+        if(isFromUser){
+            donateButton.setText(R.string.deletar_ong);
+            donateButton.setBackgroundColor(getResources().getColor(R.color.primary_red));
+        }
+        donateButton.setOnClickListener(v->{
+            if ((this.qrCode != null || this.brCode != null) && !isFromUser ) {
                 dialogInitialize();
+            }else {
+                deleteDialog();
             }
         });
+    }
 
+    private void deleteDialog() {
+        DialogInterface.OnClickListener onClickListener = (dialogInterface, i) -> {
+            Intent it = new Intent(OngDetailActivity.this, OngActivity.class);
+            it.putExtra(REQUEST_CODE,DELETE_ONG);
+            setResult(RESULT_OK,it);
+            finish();
+        };
+        Utils.alertDialog(this,onClickListener);
     }
 
     private void dialogInitialize(){

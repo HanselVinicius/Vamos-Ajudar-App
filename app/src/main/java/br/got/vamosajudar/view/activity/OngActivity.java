@@ -2,6 +2,7 @@ package br.got.vamosajudar.view.activity;
 
 import static br.got.vamosajudar.view.activity.LoginActivity.REQUST_CODE_LOGIN_VALUE;
 import static br.got.vamosajudar.view.activity.LoginActivity.USER;
+import static br.got.vamosajudar.view.activity.OngDetailActivity.DELETE_ONG;
 import static br.got.vamosajudar.view.activity.OngRegisterActivity.REQUEST_CODE_REGISTER_ONG;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -19,7 +20,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +37,8 @@ import br.got.vamosajudar.R;
 import br.got.vamosajudar.databinding.ActivityOngBinding;
 import br.got.vamosajudar.model.ong.Ong;
 import br.got.vamosajudar.model.ong.OngRegisterDTO;
-import br.got.vamosajudar.model.ong.OngResponse;
+import br.got.vamosajudar.model.ong.OngResponseList;
+import br.got.vamosajudar.model.ong.OngResponseDto;
 import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
 import br.got.vamosajudar.view.components.NavHeaderMenuCreator;
 import br.got.vamosajudar.view.components.OngAdapter;
@@ -59,7 +60,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
     //todo alterar talvez para um Set
     private List<Ong> ongList;
 
-    private OngResponse<Ong> ongResponse;
+    private OngResponseList<Ong> ongResponse;
 
     private int currentPage;
 
@@ -81,6 +82,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
 
     public static final String REQUEST_CODE = "REQUEST_CODE";
 
+    private NavHeaderMenuCreator navHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,11 +98,13 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
         recyclerView.setLayoutManager(linearLayoutManager);
         observeOngs();
         initializeScreen();
+        //todo fazer a estrategia de renovação de token e atualização da tela vinda direta da requisicao que sera feita na splashScreen trazendo o user para
+        //ca por meio de intent
     }
 
     private void observeOngs(){
         this.viewModel.getAllOngs(currentPage);
-        MutableLiveData<OngResponse<Ong>> listOfOngs = viewModel.getListOfOngs();
+        MutableLiveData<OngResponseList<Ong>> listOfOngs = viewModel.getListOfOngs();
         listOfOngs.observe(this,ongs -> {
             this.ongResponse = ongs;
             this.ongList.addAll(ongs.getContent().stream().distinct().collect(Collectors.toList()));
@@ -121,7 +125,6 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
             result -> {
                 int resultCode = result.getResultCode();
                 Intent data = result.getData();
-
                 if (resultCode == RESULT_OK && data != null) {
                     int requestCode = data.getIntExtra(REQUEST_CODE,-1);
                     switch (requestCode){
@@ -130,7 +133,16 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
                             updateInterfaceOnToken(user);
                         }
                         case REQUEST_CODE_REGISTER_ONG -> {
-                            viewModel.registerOngs(user.getToken(), (OngRegisterDTO) data.getSerializableExtra(OngRegisterActivity.CREATED_ONG));
+                            var registredOng = (OngRegisterDTO) data.getSerializableExtra(OngRegisterActivity.CREATED_ONG);
+                            viewModel.registerOngs(user.getToken(),registredOng );
+                            this.user.setOng(new OngResponseDto(registredOng));
+                            this.navHeader.initializeItems(user);
+                            swipeAction();
+                        }
+                        case DELETE_ONG ->{
+                            viewModel.deleteOng(user.getToken());
+                            user.setOng(null);
+                            this.navHeader.initializeItems(user);
                             swipeAction();
                         }
                     }
@@ -145,7 +157,9 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
         navigationView.setVisibility(View.VISIBLE);
         ImageView headerImage = headerView.findViewById(R.id.profile_image);
         TextView headerUsrName = headerView.findViewById(R.id.header_usr_name);
-        new NavHeaderMenuCreator(navigationView,this,launcher).initializeItems(user);
+        this.navHeader = new NavHeaderMenuCreator(navigationView,this,launcher);
+        navHeader.initializeItems(user);
+        Picasso.get().load(user.getImage()).into(headerImage);
         headerUsrName.setText(user.getLogin());
         this.user_icon.setOnClickListener(
                 v->{}

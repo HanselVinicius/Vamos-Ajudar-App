@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 import javax.inject.Inject;
 
 import br.got.vamosajudar.model.ong.OngRegisterDTO;
-import br.got.vamosajudar.model.ong.OngResponse;
+import br.got.vamosajudar.model.ong.OngResponseList;
 import br.got.vamosajudar.model.ong.Ong;
 import br.got.vamosajudar.model.ong.OngRepository;
 import dagger.hilt.android.lifecycle.HiltViewModel;
@@ -32,9 +32,12 @@ public class OngActivityViewModel extends ViewModel {
     }
 
 
-    public MutableLiveData<OngResponse<Ong>> getListOfOngs() {
+    public MutableLiveData<OngResponseList<Ong>> getListOfOngs() {
         return repository.getListOfOngs();
     }
 
 
+    public void deleteOng(String token) {
+        this.repository.performDeleteOng(token);
+    }
 }
