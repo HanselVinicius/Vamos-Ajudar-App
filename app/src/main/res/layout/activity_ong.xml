@@ -75,7 +75,6 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:itemIconTint="@color/primary_green"
-        app:itemTextColor="@color/white"
         app:menu="@menu/drawer_menu"
         android:visibility="gone"
         />

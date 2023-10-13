@@ -73,7 +73,7 @@ public class Utils {
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, byteArrayOutputStream);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 25, byteArrayOutputStream);
 
                 byte[] imageBytes = byteArrayOutputStream.toByteArray();
                 String base64String = Base64.encodeToString(imageBytes, Base64.NO_PADDING);

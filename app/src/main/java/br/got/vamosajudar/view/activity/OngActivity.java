@@ -137,6 +137,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
                             viewModel.registerOngs(user.getToken(),registredOng );
                             this.user.setOng(new OngResponseDto(registredOng));
                             this.navHeader.initializeItems(user);
+                            this.navHeader.updateItem();
                             swipeAction();
                         }
                         case DELETE_ONG ->{
@@ -153,12 +154,17 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
 
 
 
+
+
     private void updateInterfaceOnToken(LoginResponseDTO user){
         navigationView.setVisibility(View.VISIBLE);
         ImageView headerImage = headerView.findViewById(R.id.profile_image);
         TextView headerUsrName = headerView.findViewById(R.id.header_usr_name);
         this.navHeader = new NavHeaderMenuCreator(navigationView,this,launcher);
         navHeader.initializeItems(user);
+        if(user.getOng() != null){
+            this.navHeader.updateItem();
+        }
         Picasso.get().load(user.getImage()).into(headerImage);
         headerUsrName.setText(user.getLogin());
         this.user_icon.setOnClickListener(

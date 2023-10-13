@@ -35,6 +35,7 @@ public class NavHeaderMenuCreator {
     private final Menu menu;
     private final Activity context;
     private ActivityResultLauncher<Intent> launcher;
+    private MenuItem createOngItem;
 
     private MenuItem myOngItem;
 
@@ -47,7 +48,7 @@ public class NavHeaderMenuCreator {
 
 
     public void initializeItems(LoginResponseDTO user){
-        MenuItem createOngItem = menu.findItem(R.id.createOng);
+        createOngItem = menu.findItem(R.id.createOng);
         createOngItem.setOnMenuItemClickListener(item -> {
             Intent intent = new Intent(this.context.getApplicationContext(), OngRegisterActivity.class);
             intent.putExtra(USER,user);
@@ -78,5 +79,7 @@ public class NavHeaderMenuCreator {
     }
 
 
-
+    public void updateItem() {
+        this.createOngItem.setVisible(false);
+    }
 }

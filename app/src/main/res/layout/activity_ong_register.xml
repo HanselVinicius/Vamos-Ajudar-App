@@ -82,21 +82,21 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-
+            <EditText
+                android:id="@+id/ong_street"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints="postalAddress"
+                android:hint="@string/rua_str"
+                android:padding="8dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/ong_street"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:autofillHints="postalAddress"
-                    android:hint="@string/rua_str"
-                    android:padding="8dp" />
+
 
                 <EditText
                     android:id="@+id/ong_number_addresss"
