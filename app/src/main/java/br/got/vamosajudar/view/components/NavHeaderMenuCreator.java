@@ -79,7 +79,11 @@ public class NavHeaderMenuCreator {
     }
 
 
-    public void updateItem() {
+    public void updateItem(LoginResponseDTO user) {
+        if (user.getOng() == null) {
+            this.createOngItem.setVisible(true);
+            return;
+        }
         this.createOngItem.setVisible(false);
     }
 }

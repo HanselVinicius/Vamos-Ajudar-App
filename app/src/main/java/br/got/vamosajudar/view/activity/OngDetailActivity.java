@@ -81,9 +81,15 @@ public class OngDetailActivity extends AppCompatActivity {
 
 
     private void initializeFields(){
-        Picasso.get()
-                .load(ong.getImageLink())
-                .into(binding.imageView);
+        if (!isFromUser) {
+            Picasso.get()
+                    .load( ong.getImageLink())
+                    .into(binding.imageView);
+        }else {
+            byte[] decodedImage = Base64.getDecoder().decode(ong.getImage());
+            Bitmap decodedBitmap = BitmapFactory.decodeByteArray(decodedImage, 0, decodedImage.length);
+            binding.imageView.setImageBitmap(decodedBitmap);
+        }
         binding.nameId.setText( ong.getName());
         binding.descricaoId.setText(ong.getDescription());
         binding.objetivoId.setText(ong.getGoal());

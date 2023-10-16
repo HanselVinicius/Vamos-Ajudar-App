@@ -20,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -137,13 +138,14 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
                             viewModel.registerOngs(user.getToken(),registredOng );
                             this.user.setOng(new OngResponseDto(registredOng));
                             this.navHeader.initializeItems(user);
-                            this.navHeader.updateItem();
+                            this.navHeader.updateItem(user);
                             swipeAction();
                         }
                         case DELETE_ONG ->{
                             viewModel.deleteOng(user.getToken());
                             user.setOng(null);
                             this.navHeader.initializeItems(user);
+                            this.navHeader.updateItem(user);
                             swipeAction();
                         }
                     }
@@ -163,7 +165,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
         this.navHeader = new NavHeaderMenuCreator(navigationView,this,launcher);
         navHeader.initializeItems(user);
         if(user.getOng() != null){
-            this.navHeader.updateItem();
+            this.navHeader.updateItem(user);
         }
         Picasso.get().load(user.getImage()).into(headerImage);
         headerUsrName.setText(user.getLogin());
