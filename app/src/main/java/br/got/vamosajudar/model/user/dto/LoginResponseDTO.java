@@ -9,6 +9,7 @@ import br.got.vamosajudar.model.user.UserRole;
 
 public class LoginResponseDTO implements Serializable {
 
+    private String name;
     private String email;
     private String login;
     private UserRole userRole;
@@ -52,10 +53,15 @@ public class LoginResponseDTO implements Serializable {
         this.ong = ong;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "LoginResponseDTO{" +
-                "email='" + email + '\'' +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
                 ", userRole=" + userRole +
                 ", token='" + token + '\'' +
@@ -63,6 +69,4 @@ public class LoginResponseDTO implements Serializable {
                 ", ong=" + ong +
                 '}';
     }
-
-
 }

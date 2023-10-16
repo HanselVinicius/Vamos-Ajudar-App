@@ -22,4 +22,6 @@ public class TokenManager {
         return sharedPreferences.getString(TOKEN_KEY, null);
     }
 
+
+    public static void invalidateToken(){sharedPreferences.edit().putString(TOKEN_KEY,null).apply();}
 }

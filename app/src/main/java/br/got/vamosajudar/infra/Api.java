@@ -37,9 +37,8 @@ public interface Api {
     Call<QRDto> getQr(@Path("id") String id);
 
 
-    @Deprecated
     @GET("v1/auth/perfil")
-    Call<String> getProfile(@Header("Authorization") String token);
+    Call<LoginResponseDTO> getProfile(@Header("Authorization") String token);
 
 
     @DELETE("/v1/ong")

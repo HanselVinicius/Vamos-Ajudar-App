@@ -7,12 +7,11 @@ import androidx.lifecycle.MutableLiveData;
 import javax.inject.Inject;
 
 import br.got.vamosajudar.infra.Api;
-import br.got.vamosajudar.infra.Repository;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class OngRepository implements Repository {
+public class OngRepository {
 
 
     private static final String TAG = "OngRepository";

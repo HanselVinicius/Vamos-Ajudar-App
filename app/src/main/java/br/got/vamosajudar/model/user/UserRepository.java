@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 import javax.inject.Inject;
 
 import br.got.vamosajudar.infra.Api;
-import br.got.vamosajudar.infra.Repository;
 import br.got.vamosajudar.infra.exceptions.ForbiddenException;
 import br.got.vamosajudar.infra.exceptions.LoginException;
 import br.got.vamosajudar.model.user.dto.LoginDTO;
@@ -19,7 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserRepository implements Repository {
+public class UserRepository {
 
     private static final String TAG = "UserRepository";
     private final Api api;
@@ -51,26 +50,7 @@ public class UserRepository implements Repository {
             }
         });
     }
-    @Deprecated
-    public void getProfile(UserCallback callback, String token, MutableLiveData<String> profileLiveData){
-        String authTokent = "Bearer " +token;
-        Call<String> call = api.getProfile(authTokent);
 
-        call.enqueue(new Callback<>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-
-                if (response.isSuccessful() && response.code() != 403) {
-                    profileLiveData.postValue(response.body());
-                }
-            }
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.e(TAG, "onFailure: getprofile erro:  ",t);
-                // todo tratar execao
-            }
-        });
-    }
 
     public void register(UserRegisterDTO userRegisterDTO,UserCallback userCallback){
         Call<UserRegisterDTO> call = api.registerUser(userRegisterDTO);

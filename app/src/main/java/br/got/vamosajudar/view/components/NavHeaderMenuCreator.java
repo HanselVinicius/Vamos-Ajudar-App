@@ -25,6 +25,7 @@ import com.squareup.picasso.Target;
 import br.got.vamosajudar.R;
 import br.got.vamosajudar.model.ong.Ong;
 import br.got.vamosajudar.model.user.dto.LoginResponseDTO;
+import br.got.vamosajudar.model.user.token.TokenManager;
 import br.got.vamosajudar.view.activity.OngDetailActivity;
 import br.got.vamosajudar.view.activity.OngRegisterActivity;
 
@@ -73,6 +74,7 @@ public class NavHeaderMenuCreator {
 
         MenuItem logOutItem = menu.findItem(R.id.logOut);
         logOutItem.setOnMenuItemClickListener(item -> {
+            TokenManager.invalidateToken();
             this.context.finishAffinity();
             return true;
         });

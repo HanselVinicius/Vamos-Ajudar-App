@@ -7,14 +7,13 @@ import androidx.lifecycle.MutableLiveData;
 import javax.inject.Inject;
 
 import br.got.vamosajudar.infra.Api;
-import br.got.vamosajudar.infra.Repository;
 import br.got.vamosajudar.infra.exceptions.QrCodeException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class OngQrRepository implements Repository {
+public class OngQrRepository {
 
     private final Api api;
 

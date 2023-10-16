@@ -4,6 +4,7 @@ import static br.got.vamosajudar.view.activity.LoginActivity.REQUST_CODE_LOGIN_V
 import static br.got.vamosajudar.view.activity.LoginActivity.USER;
 import static br.got.vamosajudar.view.activity.OngDetailActivity.DELETE_ONG;
 import static br.got.vamosajudar.view.activity.OngRegisterActivity.REQUEST_CODE_REGISTER_ONG;
+import static br.got.vamosajudar.view.activity.SplashActivity.PROFILE;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -20,7 +21,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -99,8 +99,18 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
         recyclerView.setLayoutManager(linearLayoutManager);
         observeOngs();
         initializeScreen();
+        profileReturned();
         //todo fazer a estrategia de renovação de token e atualização da tela vinda direta da requisicao que sera feita na splashScreen trazendo o user para
         //ca por meio de intent
+    }
+
+    private void profileReturned() {
+        Intent intent = getIntent();
+        if (intent.hasExtra(PROFILE)){
+            LoginResponseDTO loginResponseDTO = (LoginResponseDTO) intent.getSerializableExtra(PROFILE);
+            this.user = loginResponseDTO;
+            updateInterfaceOnToken(user);
+        }
     }
 
     private void observeOngs(){
@@ -168,7 +178,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
             this.navHeader.updateItem(user);
         }
         Picasso.get().load(user.getImage()).into(headerImage);
-        headerUsrName.setText(user.getLogin());
+        headerUsrName.setText(user.getName());
         this.user_icon.setOnClickListener(
                 v->{}
         );
