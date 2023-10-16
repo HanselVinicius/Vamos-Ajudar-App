@@ -70,10 +70,10 @@ public class Utils {
             InputStream inputStream = contentResolver.openInputStream(imageUri);
 
             if (inputStream != null) {
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                Bitmap bitmap = resize( BitmapFactory.decodeStream(inputStream),720,480);
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 25, byteArrayOutputStream);
+                bitmap.compress(Bitmap.CompressFormat.WEBP, 80, byteArrayOutputStream);
 
                 byte[] imageBytes = byteArrayOutputStream.toByteArray();
                 String base64String = Base64.encodeToString(imageBytes, Base64.NO_PADDING);
@@ -86,8 +86,21 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return null;
+    }
+
+    private static Bitmap resize(Bitmap bitmap, int newWidth, int newHeight) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+
+        android.graphics.Matrix matrix = new android.graphics.Matrix();
+
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        return Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, false);
     }
 
     public static void alertDialog(Context context, DialogInterface.OnClickListener onClickListener){

@@ -81,9 +81,9 @@ public class OngDetailActivity extends AppCompatActivity {
 
 
     private void initializeFields(){
-        if (!isFromUser) {
+        if (ong.getImage().length() <= 41) {
             Picasso.get()
-                    .load( ong.getImageLink())
+                    .load(ong.getImageLink())
                     .into(binding.imageView);
         }else {
             byte[] decodedImage = Base64.getDecoder().decode(ong.getImage());

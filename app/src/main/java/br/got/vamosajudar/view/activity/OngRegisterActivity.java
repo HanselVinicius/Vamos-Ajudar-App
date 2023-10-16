@@ -162,7 +162,7 @@ public class OngRegisterActivity extends AppCompatActivity {
                 this.ongGoalEditText.getText().toString(),
                 this.getAddress(),
                 this.getContact(),
-                Utils.uriToBase64(this,this.imageBase64),
+                Utils.compressImageToBase64(this,this.imageBase64),
                 this.pixEditText.getText().toString());
     }
 
