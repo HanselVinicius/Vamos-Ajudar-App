@@ -32,6 +32,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,7 +62,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
     private SwipeRefreshLayout swipeRefreshLayout;
 
     //todo alterar talvez para um Set
-    private List<Ong> ongList;
+    private LinkedHashSet<Ong> ongList;
 
     private OngResponseList<Ong> ongResponse;
 
@@ -92,7 +94,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
         binding = ActivityOngBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         this.viewModel = new ViewModelProvider(this).get(OngActivityViewModel.class);
-        this.ongList = new ArrayList<>();
+        this.ongList = new LinkedHashSet<>();
         this.recyclerView = binding.recyclerView;
         this.linearLayoutManager = new LinearLayoutManager(this);
         this.user_icon = binding.userIcon;
@@ -127,10 +129,14 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
                 ongAdapter.notifyDataSetChanged();
             }
         });
-
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.ongAdapter = null;
+        this.ongList = null;
+    }
 
     @Override
     public void onBackPressed() {

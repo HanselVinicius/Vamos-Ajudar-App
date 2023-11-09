@@ -97,11 +97,15 @@ public class Ong implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ong ong = (Ong) o;
-        return Objects.equals(id, ong.id) && Objects.equals(name, ong.name) && Objects.equals(description, ong.description) && Objects.equals(goal, ong.goal) && Objects.equals(address, ong.address) && Objects.equals(contact, ong.contact) && Objects.equals(verified, ong.verified) && Objects.equals(active, ong.active) && Objects.equals(image, ong.image);
+        return Objects.equals(id, ong.id) && Objects.equals(name, ong.name) &&
+                Objects.equals(description, ong.description) && Objects.equals(goal, ong.goal) &&
+                Objects.equals(address, ong.address) && Objects.equals(contact, ong.contact) &&
+                Objects.equals(verified, ong.verified) && Objects.equals(active, ong.active) &&
+                Objects.equals(image, ong.image);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, goal, address, contact, verified, active, image);
+        return Objects.hash(id);
     }
 }

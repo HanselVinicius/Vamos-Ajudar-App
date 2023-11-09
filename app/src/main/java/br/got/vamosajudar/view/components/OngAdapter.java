@@ -4,6 +4,7 @@ import static br.got.vamosajudar.view.activity.OngDetailActivity.IS_FROM_USER;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.got.vamosajudar.R;
 import br.got.vamosajudar.model.ong.Ong;
@@ -26,7 +30,7 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
 
     private static final String TAG = "ONG_ADAPTER";
     //talvez usar um dto???
-    private final List<Ong> ongList;
+    private final LinkedHashSet<Ong> ongList;
 
     private final Context context;
 
@@ -35,8 +39,8 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
 
 
 
-    public OngAdapter(List<Ong> ongList, Context context) {
-        this.ongList = ongList;
+    public OngAdapter(LinkedHashSet<Ong> ongList, Context context) {
+        this.ongList = new LinkedHashSet<>(ongList);
         this.context = context;
     }
 
@@ -49,7 +53,7 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull OngViewHolder holder, int position) {
-            Ong ong = ongList.get(position);
+            Ong ong = ongList.stream().collect(Collectors.toList()).get(position);
             holder.ongTitle.setText(ong.getName());
             Picasso.get()
                     .load(ong.getImageLink())
