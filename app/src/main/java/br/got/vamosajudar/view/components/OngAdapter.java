@@ -1,5 +1,7 @@
 package br.got.vamosajudar.view.components;
 
+import static br.got.vamosajudar.view.activity.OngDetailActivity.IS_FROM_USER;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -67,6 +69,7 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
         var it = new Intent(context, OngDetailActivity.class);
         it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         it.putExtra(ONG,ong);
+        it.putExtra(IS_FROM_USER,false);
         holder.itemView.setOnClickListener(l->{
             //abre a tela de detalhamento
             context.startActivity(it);

@@ -21,6 +21,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -100,7 +101,6 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
         observeOngs();
         initializeScreen();
         profileReturned();
-        //todo fazer a estrategia de renovação de token e atualização da tela vinda direta da requisicao que sera feita na splashScreen trazendo o user para
         //ca por meio de intent
     }
 
@@ -130,6 +130,13 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
 
     }
 
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finishAffinity();
+    }
 
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
