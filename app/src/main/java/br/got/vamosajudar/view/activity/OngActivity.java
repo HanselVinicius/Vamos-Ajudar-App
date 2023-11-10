@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import br.got.vamosajudar.R;
@@ -62,7 +63,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
     private SwipeRefreshLayout swipeRefreshLayout;
 
     //todo alterar talvez para um Set
-    private LinkedHashSet<Ong> ongList;
+    private List<Ong> ongList;
 
     private OngResponseList<Ong> ongResponse;
 
@@ -94,7 +95,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
         binding = ActivityOngBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         this.viewModel = new ViewModelProvider(this).get(OngActivityViewModel.class);
-        this.ongList = new LinkedHashSet<>();
+        this.ongList = new ArrayList<>();
         this.recyclerView = binding.recyclerView;
         this.linearLayoutManager = new LinearLayoutManager(this);
         this.user_icon = binding.userIcon;
@@ -131,12 +132,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        this.ongAdapter = null;
-        this.ongList = null;
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -216,6 +212,7 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
         this.drawerLayout = binding.navigationDrawer;
         initDrawer(drawerLayout);
         //recyvler view
+
         this.recyclerView.setAdapter(new OngAdapter(this.ongList, getApplicationContext()));
         this.recyclerView.addOnScrollListener(onScroll());
         // swipe refresh

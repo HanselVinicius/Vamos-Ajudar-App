@@ -30,7 +30,7 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
 
     private static final String TAG = "ONG_ADAPTER";
     //talvez usar um dto???
-    private final LinkedHashSet<Ong> ongList;
+    private final List<Ong> ongList;
 
     private final Context context;
 
@@ -39,8 +39,8 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
 
 
 
-    public OngAdapter(LinkedHashSet<Ong> ongList, Context context) {
-        this.ongList = new LinkedHashSet<>(ongList);
+    public OngAdapter(List<Ong> ongList, Context context) {
+        this.ongList = ongList;
         this.context = context;
     }
 
@@ -53,7 +53,7 @@ public class OngAdapter extends RecyclerView.Adapter<OngAdapter.OngViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull OngViewHolder holder, int position) {
-            Ong ong = ongList.stream().collect(Collectors.toList()).get(position);
+            Ong ong = ongList.get(position);
             holder.ongTitle.setText(ong.getName());
             Picasso.get()
                     .load(ong.getImageLink())

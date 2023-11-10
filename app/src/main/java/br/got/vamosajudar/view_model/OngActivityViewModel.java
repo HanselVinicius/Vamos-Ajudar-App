@@ -24,7 +24,10 @@ public class OngActivityViewModel extends ViewModel {
 
 
     public void getAllOngs(int page){
-         this.repository.performGetAllOngs( page);
+        if(this.repository.getListOfOngs().getValue() != null) {
+            this.repository.getListOfOngs().getValue().getContent().clear();
+        }
+        this.repository.performGetAllOngs( page);
     }
 
     public void registerOngs(String token,OngRegisterDTO ong){
