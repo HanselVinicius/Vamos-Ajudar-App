@@ -104,7 +104,6 @@ public class OngActivity extends AppCompatActivity implements NavigationView.OnN
         observeOngs();
         initializeScreen();
         profileReturned();
-        //ca por meio de intent
     }
 
     private void profileReturned() {

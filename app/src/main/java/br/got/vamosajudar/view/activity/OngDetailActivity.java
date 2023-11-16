@@ -58,7 +58,7 @@ public class OngDetailActivity extends AppCompatActivity {
 
     private Ong ong;
 
-    private boolean isFromUser;
+    private boolean isFromUser = false;
 
     private Button donateButton;
 
@@ -111,7 +111,7 @@ public class OngDetailActivity extends AppCompatActivity {
         donateButton.setOnClickListener(v->{
             if ((this.qrCode != null || this.brCode != null) && !isFromUser ) {
                 dialogInitialize();
-            }else {
+            }else if(isFromUser){
                 deleteDialog();
             }
         });
